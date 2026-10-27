@@ -1,0 +1,35 @@
+# Sito Simplyx: progetto Docker separato ("simplyx-site"), rete propria,
+# nessun accesso agli altri servizi della VM. Espone solo 127.0.0.1:${SITE_PORT}.
+name: simplyx-site
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        SITE_URL: ${SITE_URL:-https://simplyx.it}
+        NOINDEX: ${NOINDEX:-1}
+    image: simplyx-site:latest
+    container_name: simplyx-site-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${SITE_PORT:-8091}:8080"
+    volumes:
+      - ./auth:/etc/nginx/auth:ro
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 64
+    networks: [site]
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+networks:
+  site:
+    name: simplyx-site-net
