@@ -140,7 +140,7 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .phead > .mesh { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 30%, #000 100%); mask-image: linear-gradient(180deg, transparent 0, #000 30%, #000 100%); }
 .statement .wrap, .sec-white .sec-head, .phead:not(.phead-dark) .wrap > * { position: relative; }
 .statement .wrap::before { content: ""; position: absolute; inset: -40px 0; z-index: -1; background: radial-gradient(closest-side, rgba(255,255,255,.95) 50%, rgba(255,255,255,0)); }
-@media (max-width: 640px) { .mesh { opacity: .65; } }
+@media (max-width: 640px) { .mesh { opacity: .85; } }
 @media print { .mesh { display: none; } }
 .sec-black { background: #000; color: var(--on-dark); }
 .sec-black .lead { color: var(--on-dark-2); } .sec-black .eyebrow { color: var(--blue-light); }

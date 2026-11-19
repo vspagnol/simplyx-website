@@ -84,9 +84,9 @@
       var w = this.host.offsetWidth, h = this.host.offsetHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
       this.w = w; this.h = h; this.cv.width = Math.round(w * dpr); this.cv.height = Math.round(h * dpr);
       this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      this.D = w < 700 ? 120 : 170;
-      var n = Math.max(16, Math.min(84, Math.round(w * h / 15000))), P = [];
-      for (var i = 0; i < n; i++) { var a = rnd() * TAU, v = 6 + rnd() * 14; P.push({ x: rnd() * (w + 80) - 40, y: rnd() * (h + 80) - 40, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: 1.3 + rnd() * 1.7, hot: rnd() < .14, ph: rnd() * TAU }); }
+      this.D = w < 700 ? 108 : 138;
+      var n = Math.max(22, Math.min(150, Math.round(w * h / (w < 700 ? 6200 : 8200)))), P = [];
+      for (var i = 0; i < n; i++) { var a = rnd() * TAU, v = 11 + rnd() * 20; P.push({ x: rnd() * (w + 80) - 40, y: rnd() * (h + 80) - 40, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: 1.3 + rnd() * 1.7, hot: rnd() < .14, ph: rnd() * TAU }); }
       this.P = P;
     };
     Net.prototype.draw = function (t, dt) {
@@ -99,17 +99,28 @@
         nb.push([]);
       }
       c.lineWidth = 1;
+      var n1 = [], n2 = [], b1 = [], b2 = [];
+      for (i = 0; i < n; i++) { n1.push(-1); n2.push(-1); b1.push(1e12); b2.push(1e12); }
       for (i = 0; i < n; i++) for (j = i + 1; j < n; j++) {
         p = P[i]; q = P[j]; d2 = (p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y);
+        if (d2 < b1[i]) { b2[i] = b1[i]; n2[i] = n1[i]; b1[i] = d2; n1[i] = j; } else if (d2 < b2[i]) { b2[i] = d2; n2[i] = j; }
+        if (d2 < b1[j]) { b2[j] = b1[j]; n2[j] = n1[j]; b1[j] = d2; n1[j] = i; } else if (d2 < b2[j]) { b2[j] = d2; n2[j] = i; }
         if (d2 > D2) continue;
         nb[i].push(j); a = 1 - Math.sqrt(d2) / D;
-        c.strokeStyle = 'rgba(0,113,227,' + (a * .34).toFixed(3) + ')';
+        c.strokeStyle = 'rgba(0,113,227,' + (.08 + a * .36).toFixed(3) + ')';
         c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
       }
-      c.fillStyle = 'rgba(18,150,240,.05)';
+      // nessun puntino resta isolato: ognuno è sempre legato ai due più vicini
+      c.strokeStyle = 'rgba(0,113,227,.1)'; c.beginPath();
+      for (i = 0; i < n; i++) {
+        if (n1[i] >= 0 && b1[i] > D2 && b1[i] < D2 * 6) { c.moveTo(P[i].x, P[i].y); c.lineTo(P[n1[i]].x, P[n1[i]].y); }
+        if (n2[i] >= 0 && b2[i] > D2 && b2[i] < D2 * 6) { c.moveTo(P[i].x, P[i].y); c.lineTo(P[n2[i]].x, P[n2[i]].y); }
+      }
+      c.stroke();
+      c.fillStyle = 'rgba(18,150,240,.03)';
       for (i = 0; i < n; i++) for (j = 0; j < nb[i].length; j++) for (k = j + 1; k < nb[i].length; k++) {
         p = P[nb[i][j]]; q = P[nb[i][k]];
-        if ((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y) > D2) continue;
+        if ((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y) > D2 * .8) continue;
         c.beginPath(); c.moveTo(P[i].x, P[i].y); c.lineTo(p.x, p.y); c.lineTo(q.x, q.y); c.closePath(); c.fill();
       }
       for (i = 0; i < n; i++) {
