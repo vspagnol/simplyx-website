@@ -137,13 +137,13 @@ function nav(c, active) {
 <div class="mega" id="menu-soluzioni" hidden>
 <div class="mega-in">
 <p class="mega-k">Soluzioni</p>
-<ul class="mega-list">${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}"${active === solPath(s.slug) ? ' aria-current="page"' : ''}><span class="mega-t">${esc(s.name)}</span><span class="mega-d">${esc(s.short)}</span></a></li>`).join('')}</ul>
+<ul class="mega-list">${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}"${active === solPath(s.slug) ? ' aria-current="page"' : ''}><span class="mega-t">${esc(s.brand)}</span><span class="mega-d">${esc(s.short)}</span></a></li>`).join('')}</ul>
 </div>
 </div>
 <div class="mobile" id="menu-mobile" hidden>
 <nav aria-label="Menu">
 <p class="mega-k">Soluzioni</p>
-<ul class="mobile-sol">${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}">${esc(s.name)}</a></li>`).join('')}</ul>
+<ul class="mobile-sol">${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}">${esc(s.brand)}</a></li>`).join('')}</ul>
 <ul class="mobile-main">${NAV.filter((n) => !n.menu).map((n) => `<li><a href="${c.href(n.path, n.hash)}">${n.label}</a></li>`).join('')}</ul>
 <a class="btn btn-blue btn-block" href="${c.href('contatti/')}">Parliamone</a>
 </nav>
@@ -157,7 +157,7 @@ function footer(c) {
 <div class="wrap">
 <div class="foot-grid">
 <div class="foot-col foot-brand"><p class="foot-name">SimplyX</p><p>${esc(SITE.tagline)}</p></div>
-<div class="foot-col"><p class="foot-h">Soluzioni</p><ul>${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}">${esc(s.name)}</a></li>`).join('')}</ul></div>
+<div class="foot-col"><p class="foot-h">Soluzioni</p><ul>${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}">${esc(s.brand)}</a></li>`).join('')}</ul></div>
 <div class="foot-col"><p class="foot-h">SimplyX</p><ul><li><a href="${c.href('labs/')}">SimplyX Labs</a></li><li><a href="${c.href('save/')}">SimplyX Save</a></li><li><a href="${c.href('', 'metodo')}">Metodo</a></li><li><a href="${c.href('contatti/')}">Contatti</a></li></ul></div>
 <div class="foot-col"><p class="foot-h">Contatti</p><ul><li><a href="mailto:${SITE.email}">${SITE.email}</a></li><li><a href="tel:${SITE.phoneHref}">${SITE.phone}</a></li><li><a href="https://wa.me/${SITE.whatsappHref}" rel="noopener">WhatsApp ${SITE.whatsapp}</a></li></ul></div>
 <div class="foot-col"><p class="foot-h">Sedi</p><ul>${SITE.offices.map((o) => `<li>${o.city} — ${o.street}, ${o.zip}</li>`).join('')}</ul></div>
@@ -197,8 +197,8 @@ const ctaBlock = (c, title, sub, topic) => `<section class="cta-band"><div class
 <div class="btn-row"><a class="btn btn-blue" href="${c.href('contatti/')}${topic ? '?tema=' + topic : ''}">Scrivici${icon('arrow', 'ic')}</a><a class="btn btn-ghost-light" href="tel:${SITE.phoneHref}">Chiama ${SITE.phone}</a></div></div></section>`;
 
 const tile = (c, s, cls = '') => `<a class="tile ${cls} reveal" href="${c.href(solPath(s.slug))}">
-${photo(c, s.img, '', { sizes: '(min-width: 900px) 50vw, 100vw' })}
-<span class="tile-txt"><span class="tile-t">${esc(s.name)}</span><span class="tile-d">${esc(s.short)}</span></span>
+${photo(c, s.img, '', { sizes: '(min-width: 900px) 50vw, 100vw', cls: s.focus })}
+<span class="tile-txt"><span class="tile-k">${esc(s.kicker)}</span><span class="tile-t">${esc(s.brand)}</span><span class="tile-d">${esc(s.short)}</span></span>
 <span class="tile-go">Scopri di più${icon('chevron', 'ic')}</span></a>`;
 
 const labCard = (c, p, rv = true) => `<article class="lab${rv ? ' reveal' : ''}"><div class="lab-img"><img src="${c.asset(`img/labs/${p.img}.webp`)}" alt="${esc(p.alt)}" width="1200" height="800" loading="lazy" decoding="async"></div>
@@ -250,9 +250,10 @@ ${ctaBlock(c, h.cta.title, h.cta.sub)}`;
 function renderSolution(s) {
   const c = ctx(solPath(s.slug));
   const body = `<section class="hero hero-page">
-<div class="hero-media" data-parallax>${photo(c, s.img, s.alt, { lazy: false })}</div>
+<div class="hero-media" data-parallax>${photo(c, s.img, s.alt, { lazy: false, cls: s.focus })}</div>
 <div class="wrap hero-in">
-<nav class="crumbs hero-fade" aria-label="Percorso"><ol><li><a href="${c.href('')}">Home</a></li><li><a href="${c.href('', 'soluzioni')}">Soluzioni</a></li><li aria-current="page">${esc(s.name)}</li></ol></nav>
+<nav class="crumbs hero-fade" aria-label="Percorso"><ol><li><a href="${c.href('')}">Home</a></li><li><a href="${c.href('', 'soluzioni')}">Soluzioni</a></li><li aria-current="page">${esc(s.brand)}</li></ol></nav>
+<p class="eyebrow hero-brand hero-fade">${esc(s.brand)} <span>· ${esc(s.kicker)}</span></p>
 <h1 class="h1 hero-fade">${esc(s.title)}</h1>
 <p class="lead hero-fade">${esc(s.lead)}</p>
 <div class="btn-row hero-fade"><a class="btn btn-blue" href="${c.href('contatti/')}?tema=${s.slug}">Parliamone${icon('arrow')}</a><a class="btn btn-ghost-light" href="#cosa-facciamo">Cosa facciamo</a></div>

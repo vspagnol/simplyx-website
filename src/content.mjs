@@ -35,7 +35,7 @@ export const HOME = {
     titleAccent: "Un solo partner.",
     sub: "Progettiamo, realizziamo e gestiamo la tecnologia della tua azienda: dall'impianto che la alimenta al software che la fa crescere.",
     cta1: "Parliamone", cta2: "Scopri le soluzioni",
-    alt: "Edificio tecnologico illuminato al crepuscolo accanto a un campo fotovoltaico, con le colline sullo sfondo"
+    alt: "Città sul mare al crepuscolo con torri verdi, tetti fotovoltaici, pale eoliche sulle colline e un data center illuminato"
   },
   statement: {
     lead: "La tecnologia funziona quando ogni livello parla con l'altro.",
@@ -43,8 +43,8 @@ export const HOME = {
   },
   solutions: {
     eyebrow: "Soluzioni",
-    title: "Sei competenze. Una sola visione.",
-    sub: "Ogni area lavora da sola o insieme alle altre. Scegli da dove partire: al resto pensiamo quando serve."
+    title: "Sei soluzioni. Un solo nome.",
+    sub: "Ogni soluzione SimplyX lavora da sola o insieme alle altre. Scegli da dove partire: al resto pensiamo quando serve."
   },
   paths: {
     eyebrow: "Da dove vuoi partire?",
@@ -188,9 +188,9 @@ export const PRIVACY = {
 
 export const SOLUTIONS = [
   {
-    slug: "data-center", name: "Data Center", short: "Sale server, edge e reti progettate per durare.",
+    slug: "data-center", brand: "SimplyX Data Center", kicker: "Infrastrutture", focus: "", name: "Data Center", short: "Sale server, edge e reti progettate per durare.",
     img: "datacenter", img2: "network",
-    alt: "Corridoio di un data center con file di armadi rack e luci blu",
+    alt: "Corridoio di un data center con armadi rack illuminati di blu e l'insegna SimplyX sulla parete di fondo",
     alt2: "Cavi in fibra ottica ordinati su un pannello di rete",
     img3: "energy-room", alt3: "Locale tecnico luminoso con armadi di accumulo e quadri elettrici allineati",
     metaTitle: "Data Center — Progettazione, realizzazione e gestione | SimplyX",
@@ -219,11 +219,11 @@ export const SOLUTIONS = [
     related: ["energy", "managed-services", "cybersecurity"]
   },
   {
-    slug: "intelligenza-artificiale", name: "Intelligenza Artificiale", short: "AI applicata al lavoro vero, con le persone al comando.",
+    slug: "intelligenza-artificiale", brand: "SimplyX AI", kicker: "Intelligenza Artificiale", focus: "", name: "Intelligenza Artificiale", short: "AI applicata al lavoro vero, con le persone al comando.",
     img: "ai", img2: "team",
-    alt: "Primo piano di un processore su una scheda elettronica scura, illuminato da una luce blu",
+    alt: "Primo piano di un processore con la scritta AI incisa, su una scheda elettronica scura",
     alt2: "Due professionisti analizzano dei grafici su un tablet durante una riunione di lavoro",
-    img3: "automation", alt3: "Una professionista al lavoro alla scrivania davanti a un monitor con uno schema di flusso",
+    img3: "automation", alt3: "Una professionista al lavoro davanti a un monitor con un flusso di automazione SimplyX",
     metaTitle: "Intelligenza Artificiale per le aziende | SimplyX",
     metaDesc: "SimplyX porta l'intelligenza artificiale nei processi aziendali: assistenti, analisi di documenti, ricerca sulla conoscenza interna e previsioni. Con privacy e controllo umano.",
     title: "Intelligenza artificiale, applicata al lavoro vero.",
@@ -250,9 +250,9 @@ export const SOLUTIONS = [
     related: ["business-automation", "data-center", "cybersecurity"]
   },
   {
-    slug: "business-automation", name: "Business Automation", short: "Processi più semplici, meno lavoro manuale.",
+    slug: "business-automation", brand: "SimplyX Automation", kicker: "Automazione dei processi", focus: "low", name: "Business Automation", short: "Processi più semplici, meno lavoro manuale.",
     img: "automation", img2: "team",
-    alt: "Una professionista al lavoro alla scrivania davanti a un monitor con uno schema di flusso",
+    alt: "Una professionista al lavoro davanti a un monitor con un flusso di automazione SimplyX",
     alt2: "Due professionisti analizzano dei grafici su un tablet durante una riunione di lavoro",
     metaTitle: "Business Automation — Automazione dei processi aziendali | SimplyX",
     metaDesc: "SimplyX automatizza i processi aziendali: flussi di ordini, documenti e approvazioni, integrazione tra gestionale, CRM, e-commerce e WhatsApp, portali e app su misura.",
@@ -280,10 +280,10 @@ export const SOLUTIONS = [
     related: ["intelligenza-artificiale", "managed-services", "cybersecurity"]
   },
   {
-    slug: "managed-services", name: "Managed Services", short: "Sistemi, reti e cloud gestiti ogni giorno.",
+    slug: "managed-services", brand: "SimplyX Managed", kicker: "Servizi gestiti", focus: "low", name: "Managed Services", short: "Sistemi, reti e cloud gestiti ogni giorno.",
     img: "managed", img2: "datacenter",
-    alt: "Un tecnico di spalle osserva più monitor con grafici e cruscotti in una sala operativa",
-    alt2: "Corridoio di un data center con file di armadi rack e luci blu",
+    alt: "Un tecnico di spalle osserva tre monitor con i cruscotti di controllo SimplyX",
+    alt2: "Corridoio di un data center con armadi rack illuminati di blu e l'insegna SimplyX sulla parete di fondo",
     img3: "network", alt3: "Cavi in fibra ottica ordinati su un pannello di rete",
     metaTitle: "Managed Services — Gestione IT, reti e cloud | SimplyX",
     metaDesc: "SimplyX gestisce ogni giorno sistemi, reti, cloud e postazioni: monitoraggio, assistenza, aggiornamenti, backup e rapporti con i fornitori, con livelli di servizio chiari.",
@@ -311,10 +311,10 @@ export const SOLUTIONS = [
     related: ["cybersecurity", "data-center", "business-automation"]
   },
   {
-    slug: "cybersecurity", name: "Cybersecurity", short: "Protezione concreta, che non rallenta il lavoro.",
+    slug: "cybersecurity", brand: "SimplyX Secure", kicker: "Cybersecurity", focus: "pos-r low", name: "Cybersecurity", short: "Protezione concreta, che non rallenta il lavoro.",
     img: "cybersecurity", img2: "managed",
-    alt: "Una mano inserisce una chiave di sicurezza in un computer portatile su una scrivania scura",
-    alt2: "Un tecnico di spalle osserva più monitor con grafici e cruscotti in una sala operativa",
+    alt: "Una mano inserisce una chiave di sicurezza in un portatile che mostra il marchio SimplyX e uno scudo",
+    alt2: "Un tecnico di spalle osserva tre monitor con i cruscotti di controllo SimplyX",
     img3: "network", alt3: "Cavi in fibra ottica ordinati su un pannello di rete",
     metaTitle: "Cybersecurity per aziende e studi professionali | SimplyX",
     metaDesc: "SimplyX protegge aziende e studi professionali: valutazione del rischio, accessi e identità, reti e dispositivi, backup e continuità, formazione delle persone, supporto su NIS2 e GDPR.",
@@ -342,11 +342,11 @@ export const SOLUTIONS = [
     related: ["managed-services", "data-center", "intelligenza-artificiale"]
   },
   {
-    slug: "energy", name: "Energy", short: "Produrre, accumulare e consumare meglio.",
+    slug: "energy", brand: "SimplyX Energy", kicker: "Energia", focus: "pos-r", name: "Energy", short: "Produrre, accumulare e consumare meglio.",
     img: "energy", img2: "energy-room",
-    alt: "Pannelli fotovoltaici sul tetto di un edificio industriale al tramonto, con il mare sullo sfondo",
+    alt: "Pannelli fotovoltaici su un tetto al tramonto, con un armadio di accumulo SimplyX in primo piano",
     alt2: "Locale tecnico luminoso con armadi di accumulo e quadri elettrici allineati",
-    img3: "hero", alt3: "Edificio tecnologico illuminato al crepuscolo accanto a un campo fotovoltaico",
+    img3: "hero", alt3: "Città sostenibile sul mare al crepuscolo, con tetti fotovoltaici e un data center illuminato",
     metaTitle: "Energy — Fotovoltaico, accumulo, continuità ed efficienza | SimplyX",
     metaDesc: "SimplyX aiuta le aziende a consumare meglio: analisi dei consumi, fotovoltaico, accumulo, continuità elettrica, monitoraggio ed efficienza degli impianti.",
     title: "L'energia come vantaggio, non solo come costo.",
