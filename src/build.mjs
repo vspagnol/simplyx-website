@@ -204,6 +204,11 @@ ${photo(c, s.img, '', { sizes: '(min-width: 900px) 50vw, 100vw', cls: s.focus })
 const labCard = (c, p, rv = true) => `<article class="lab${rv ? ' reveal' : ''}"><div class="lab-img"><img src="${c.asset(`img/labs/${p.img}.webp`)}" alt="${esc(p.alt)}" width="1200" height="800" loading="lazy" decoding="async"></div>
 <div class="lab-txt"><p class="lab-meta"><span>${esc(p.kind)}</span><span class="badge badge-${p.status === 'Realizzato' ? 'ok' : 'wip'}">${esc(p.status)}</span></p><h3>${esc(p.name)}</h3><p>${esc(p.d)}</p></div></article>`;
 
+const mindBlock = (lead, body) => `<section class="sec sec-black mind"><div class="wrap split">
+<div class="split-txt reveal"><p class="statement-lead">${esc(lead)}</p>${body.map((p) => `<p class="lead">${esc(p)}</p>`).join('')}</div>
+<div class="brain reveal" data-brain role="img" aria-label="Animazione: punti luminosi si collegano con linee e triangoli fino a formare un cervello"><canvas></canvas></div>
+</div></section>`;
+
 const methodBlock = () => `<ol class="method">${METHOD.map((m) => `<li class="reveal"><span class="method-n">${m.n}</span><h3>${m.t}</h3><p>${esc(m.d)}</p></li>`).join('')}</ol>`;
 
 // ---- home ----
@@ -220,7 +225,7 @@ function renderHome() {
 </div>
 </section>
 
-<section class="sec sec-white statement"><div class="wrap wrap-narrow reveal"><p class="statement-lead">${esc(h.statement.lead)}</p><p class="statement-body">${esc(h.statement.body)}</p></div></section>
+${mindBlock(h.statement.lead, [h.statement.body])}
 
 <section class="sec sec-grey" id="soluzioni"><div class="wrap">${sectionHead(h.solutions.eyebrow, h.solutions.title, h.solutions.sub)}
 <div class="tiles">${SOLUTIONS.map((s, i) => tile(c, s, i < 2 ? 'tile-half' : i < 5 ? 'tile-third' : 'tile-full')).join('\n')}</div></div></section>
@@ -260,7 +265,7 @@ function renderSolution(s) {
 </div>
 </section>
 
-<section class="sec sec-white statement"><div class="wrap wrap-narrow reveal"><p class="statement-lead">${esc(s.intro.h)}</p>${s.intro.p.map((p) => `<p class="statement-body">${esc(p)}</p>`).join('')}</div></section>
+${s.slug === 'intelligenza-artificiale' ? mindBlock(s.intro.h, s.intro.p) : `<section class="sec sec-white statement"><div class="wrap wrap-narrow reveal"><p class="statement-lead">${esc(s.intro.h)}</p>${s.intro.p.map((p) => `<p class="statement-body">${esc(p)}</p>`).join('')}</div></section>`}
 
 <section class="sec sec-grey" id="cosa-facciamo"><div class="wrap">${sectionHead('Cosa facciamo', 'Tutto quello che serve, da un solo partner.')}
 <div class="cards cards-3">${s.caps.map((k) => `<article class="card card-white reveal">${icon(k.icon, 'ic ic-lg')}<h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div></div></section>
