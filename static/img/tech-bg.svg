@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" fill="none">
+<style>
+.g{stroke:#1d1d1f;stroke-opacity:.04;stroke-width:1}
+.t{stroke:#0071e3;stroke-opacity:.13;stroke-width:1}
+.n{fill:#fff;stroke:#0071e3;stroke-opacity:.32;stroke-width:1}
+.c{fill:#fff;stroke:#0071e3;stroke-opacity:.22;stroke-width:1}
+.p{stroke:#12b5fb;stroke-width:1.8;stroke-linecap:round;stroke-dasharray:34 966;stroke-dashoffset:1000;animation:run 9s linear infinite}
+.p2{animation-duration:12s;animation-delay:-4s}.p3{animation-duration:10s;animation-delay:-7s}.p4{animation-duration:14s;animation-delay:-2s}
+.b{fill:#12b5fb;animation:blink 4s ease-in-out infinite}.b2{animation-delay:-1.3s}.b3{animation-delay:-2.6s}
+@keyframes run{to{stroke-dashoffset:0}}
+@keyframes blink{0%,100%{opacity:.15}50%{opacity:.75}}
+@media (prefers-reduced-motion:reduce){.p{animation:none;opacity:0}.b{animation:none;opacity:.4}}
+</style>
+<path class="g" d="M0 60H720M0 120H720M0 180H720M0 240H720M0 300H720M0 360H720M0 420H720M0 480H720M0 540H720M0 600H720M0 660H720M60 0V720M120 0V720M180 0V720M240 0V720M300 0V720M360 0V720M420 0V720M480 0V720M540 0V720M600 0V720M660 0V720"/>
+<path id="a" class="t" d="M0 180H180V300H420V180H720"/>
+<path id="b" class="t" d="M300 0V120H540V420H300V720"/>
+<path id="c" class="t" d="M0 540H120V600H600V540H720"/>
+<path id="d" class="t" d="M660 0V240H600V480H660V720"/>
+<path class="t" d="M180 300V420H60M420 300H480M540 420H600"/>
+<rect class="c" x="462" y="282" width="36" height="36" rx="6"/>
+<path class="t" d="M470 282v-8M480 282v-8M490 282v-8M470 318v8M480 318v8M490 318v8M498 290h8M498 300h8M498 310h8"/>
+<rect class="c" x="36" y="402" width="48" height="36" rx="6"/>
+<circle class="n" cx="180" cy="180" r="3.5"/><circle class="n" cx="420" cy="300" r="3.5"/><circle class="n" cx="300" cy="120" r="3.5"/><circle class="n" cx="540" cy="420" r="3.5"/><circle class="n" cx="120" cy="600" r="3.5"/><circle class="n" cx="600" cy="480" r="3.5"/><circle class="n" cx="600" cy="240" r="3.5"/><circle class="n" cx="300" cy="420" r="3.5"/>
+<circle class="b" cx="480" cy="300" r="3"/><circle class="b b2" cx="60" cy="420" r="3"/><circle class="b b3" cx="600" cy="600" r="2.5"/>
+<path class="p" pathLength="1000" d="M0 180H180V300H420V180H720"/>
+<path class="p p2" pathLength="1000" d="M300 0V120H540V420H300V720"/>
+<path class="p p3" pathLength="1000" d="M0 540H120V600H600V540H720"/>
+<path class="p p4" pathLength="1000" d="M660 0V240H600V480H660V720"/>
+</svg>
