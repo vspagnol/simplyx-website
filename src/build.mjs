@@ -206,7 +206,7 @@ const labCard = (c, p, rv = true) => `<article class="lab${rv ? ' reveal' : ''}"
 
 const mindBlock = (lead, body) => `<section class="sec sec-black mind"><div class="wrap split">
 <div class="split-txt reveal"><p class="statement-lead">${esc(lead)}</p>${body.map((p) => `<p class="lead">${esc(p)}</p>`).join('')}</div>
-<div class="brain reveal" data-brain role="img" aria-label="Animazione: punti luminosi si collegano con linee e triangoli fino a formare un cervello"><canvas></canvas></div>
+<div class="brain reveal" data-brain role="img" aria-label="Animazione: punti luminosi si collegano con linee e triangoli fino a formare un cervello con la scritta SimplyX al centro"><canvas></canvas></div>
 </div></section>`;
 
 const methodBlock = () => `<ol class="method">${METHOD.map((m) => `<li class="reveal"><span class="method-n">${m.n}</span><h3>${m.t}</h3><p>${esc(m.d)}</p></li>`).join('')}</ol>`;

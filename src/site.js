@@ -181,7 +181,25 @@
     var N = V.map(function (p, idx) { return { tx: p[0], ty: p[1], out: idx < nOut, r: idx < nOut ? .9 + R() * .7 : .55 + R() * .75, big: R() < .13, d: p[0] / 100 * 1.2 + R() * .5, ph: R() * TAU, ph2: R() * TAU, sa: R() * TAU, sr: 70 + R() * 70, x: 0, y: 0, k: 0 }; });
     var SIG = []; for (i = 0; i < 9; i++) { var a0 = Math.floor(R() * n); SIG.push({ a: a0, b: adj[a0][0], p: R(), sp: .9 + R() * 1.1 }); }
     var FREE = []; for (i = 0; i < 26; i++) { var an = R() * TAU, sv = 2.5 + R() * 4.5; FREE.push({ x: -20 + R() * 140, y: -15 + R() * 126, vx: Math.cos(an) * sv, vy: Math.sin(an) * sv, r: .35 + R() * .5 }); }
-    var CYCLE = 18, FORM = 3.8, OUTAT = 14.5;
+    // scritta SIMPLYX al centro: lettere fatte di puntini e linee, tracciate da sinistra a destra
+    var GLY = { S: [5, [[5,0],[0,0],[0,3.5],[5,3.5],[5,7],[0,7]]], I: [0, [[0,0],[0,7]]], M: [6, [[0,7],[0,0],[3,4],[6,0],[6,7]]], P: [5, [[0,7],[0,0],[5,0],[5,3.5],[0,3.5]]], L: [4.6, [[0,0],[0,7],[4.6,7]]], Y: [5, [[0,0],[2.5,3.5],[5,0]], [[2.5,3.5],[2.5,7]]], X: [5, [[0,0],[5,7]], [[5,0],[0,7]]] };
+    var WN = [], WS = [], wx = 0, WGAP = 2.5, WU = 1.12, wTot = 0;
+    'SIMPLYX'.split('').forEach(function (ch, li, arr) { wTot += GLY[ch][0] + (li < arr.length - 1 ? WGAP : 0); });
+    'SIMPLYX'.split('').forEach(function (ch, li) {
+      var g = GLY[ch], blue = ch === 'X';
+      for (var st = 1; st < g.length; st++) {
+        var prev = -1;
+        g[st].forEach(function (pt, pi) {
+          var gx = 50 + (wx + pt[0] - wTot / 2) * WU, gy = 42 + (pt[1] - 3.5) * WU, idx = -1;
+          for (var z = 0; z < WN.length; z++) if (Math.abs(WN[z].tx - gx) < .01 && Math.abs(WN[z].ty - gy) < .01) idx = z;
+          if (idx < 0) { idx = WN.length; WN.push({ tx: gx, ty: gy, blue: blue, d: 1.5 + li * .16 + R() * .25, sa: R() * TAU, sr: 60 + R() * 60, x: 0, y: 0 }); }
+          if (prev >= 0) WS.push({ a: prev, b: idx, blue: blue, t0: 2.5 + li * .2 + pi * .09 });
+          prev = idx;
+        });
+      }
+      wx += g[0] + WGAP;
+    });
+    var CYCLE = 19, FORM = 4.4, OUTAT = 15.5;
     function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
     function ease(v) { v = clamp(v); return 1 - Math.pow(1 - v, 3); }
 
@@ -245,6 +263,28 @@
         c.fillStyle = 'rgba(255,255,255,' + (.95 * F).toFixed(3) + ')'; c.beginPath(); c.arc(gxx, gyy, Math.max(1.4, .75 * s), 0, TAU); c.fill();
       }
       c.globalCompositeOperation = 'source-over';
+      // scritta al centro
+      var WF = frozen ? 1 : clamp((t - 2.3) / 1.2) * (1 - clamp((t - OUTAT) / 1));
+      if (WF > 0) {
+        var bg = c.createRadialGradient(0, 0, 0, 0, 0, 1);
+        bg.addColorStop(0, 'rgba(2,9,24,' + (.9 * WF).toFixed(3) + ')'); bg.addColorStop(.62, 'rgba(2,9,24,' + (.74 * WF).toFixed(3) + ')'); bg.addColorStop(1, 'rgba(2,9,24,0)');
+        c.save(); c.translate(ox + 50 * s, oy + 42 * s); c.scale(37 * s, 11.5 * s); c.fillStyle = bg; c.beginPath(); c.arc(0, 0, 1, 0, TAU); c.fill(); c.restore();
+      }
+      for (i = 0; i < WN.length; i++) {
+        p = WN[i];
+        var wk = frozen ? 1 : t < OUTAT ? ease((t - p.d) / 1.7) : 1 - Math.pow(clamp((t - OUTAT - .2) / 2), 2);
+        var wsx = 50 + Math.cos(p.sa) * p.sr, wsy = 42 + Math.sin(p.sa) * p.sr * .8;
+        p.x = ox + (wsx + (p.tx - wsx) * wk) * s; p.y = oy + (wsy + (p.ty - wsy) * wk) * s;
+      }
+      var wa = frozen ? 1 : 1 - clamp((t - OUTAT) / 1);
+      if (wa > 0) for (var pass = 0; pass < 2; pass++) for (i = 0; i < WS.length; i++) {
+        e = WS[i]; f = frozen ? 1 : clamp((t - e.t0) / .45); if (f <= 0) continue;
+        p = WN[e.a]; q = WN[e.b];
+        if (pass === 0) { c.strokeStyle = (e.blue ? 'rgba(18,181,251,' : 'rgba(120,200,255,') + (.22 * wa).toFixed(3) + ')'; c.lineWidth = Math.max(6, 2.7 * s); }
+        else { c.strokeStyle = (e.blue ? 'rgba(40,175,255,' : 'rgba(240,249,255,') + wa.toFixed(3) + ')'; c.lineWidth = Math.max(2.2, .95 * s); }
+        c.lineJoin = 'round'; c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(p.x + (q.x - p.x) * f, p.y + (q.y - p.y) * f); c.stroke();
+      }
+      for (i = 0; i < WN.length; i++) { p = WN[i]; c.fillStyle = p.blue ? 'rgba(150,222,255,.98)' : 'rgba(255,255,255,.98)'; c.beginPath(); c.arc(p.x, p.y, Math.max(1.5, .55 * s), 0, TAU); c.fill(); }
     };
     var brains = boxes.map(function (b) { return new Brain(b); });
     if (reduce) { brains.forEach(function (b) { b.draw(8, 0, true); }); return; }
