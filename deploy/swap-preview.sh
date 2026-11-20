@@ -15,8 +15,8 @@ SRC="$(docker inspect "$C" --format '{{range .Mounts}}{{if eq .Destination "/usr
 echo "Il contenitore $C serve la cartella: ${SRC:-<non trovata>}"
 [ -n "$SRC" ] || { echo "STOP: non trovo la cartella servita. Mandami: docker inspect $C --format '{{json .Mounts}}'"; exit 1; }
 case "$SRC" in
-  /srv/simplyx/website/dist|/srv/simplyx/website/dist/) ;;
-  *) echo "STOP: cartella diversa da /srv/simplyx/website/dist. Non tocco nulla: mandami questa riga."; exit 1;;
+  /srv/simplyx/website/dist|/srv/simplyx/website/dist/|"$here/live") ;;
+  *) echo "STOP: cartella inattesa (né /srv/simplyx/website/dist né $here/live). Non tocco nulla: mandami questa riga."; exit 1;;
 esac
 [ -w "$SRC" ] || { echo "STOP: non ho i permessi di scrittura su $SRC"; exit 1; }
 
