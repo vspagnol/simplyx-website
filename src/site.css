@@ -226,6 +226,8 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .chips li { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); color: #fff; border-radius: 99px; padding: 7px 13px; font-size: .875rem; font-weight: 600; line-height: 1.2; }
 .verso { font-size: .8125rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #ffbe0b; text-align: center; }
 .fine-nota { margin-top: 18px; font-size: .8125rem; color: var(--on-dark-2); max-width: 52em; }
+.noto-int { margin-top: clamp(56px, 8vw, 104px); } .noto-int .sec-head { margin-bottom: 32px; }
+.h3-xl { font-size: clamp(1.75rem, 3.6vw, 2.75rem); line-height: 1.08; letter-spacing: -.03em; font-weight: 650; text-wrap: balance; }
 /* variante nei colori SimplyX (pagina Save): cinque aree di costo → Risparmia AI → resoconto, piano, avvisi */
 .schema-blu .fili .f { stroke: rgba(41,151,255,.45); } .schema-blu .fili .f.torna { stroke: rgba(18,181,251,.75); }
 .schema-blu .fili .p0 { fill: #12b5fb; } .schema-blu .fili .p1 { fill: #2997ff; }

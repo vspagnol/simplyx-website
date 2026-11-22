@@ -104,6 +104,8 @@ for (const [label, opts] of Object.entries(sizes)) {
   await page.goto(srv.url + '/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(500);
   const hr = await page.evaluate(() => { const f = document.querySelector('#risparmia .flusso'); return f ? [f.querySelectorAll('.fili path').length, document.querySelectorAll('#risparmia a[href="https://risparmia-ai.com/aziende/"]').length] : null; });
+  const hn = await page.evaluate(() => { const f = document.querySelector('#notoria .flusso'); return f ? [f.querySelectorAll('.fili path').length, [...f.querySelectorAll('.nodo,.rit')].filter((e) => { const r = e.getBoundingClientRect(); return r.left < -1 || r.right > innerWidth + 1; }).length, document.querySelectorAll('#notoria a[href$="notoria/#integrazioni"]').length] : null; });
+  check(hn && hn[0] === 6 && hn[1] === 0 && hn[2] === 1, `[${label}] home: integrazioni di Notoria con lo schema e il link`, JSON.stringify(hn));
   check(hr && hr[0] === 9 && hr[1] === 1, `[${label}] home: sezione Risparmia AI con lo schema e il link`, JSON.stringify(hr));
   // modulo contatti
   await page.goto(srv.url + '/contatti/?tema=cybersecurity', { waitUntil: 'networkidle' });

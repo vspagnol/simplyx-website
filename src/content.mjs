@@ -188,6 +188,8 @@ export const NOTORIA = {
     eyebrow: "Per le aziende",
     title: "Il vostro sito, collegato ai vostri sistemi.",
     sub: "Per un'azienda il sito è il punto da cui entrano clienti, richieste e assistenza. Notoria lo collega agli strumenti che usate già. Ogni integrazione è un progetto su misura, dopo un'analisi.",
+    homeSub: "Le richieste che arrivano dal sito entrano nel vostro CRM e nel vostro help desk; i dati del gestionale arrivano sul sito, dopo un'analisi. Ogni integrazione è un progetto su misura.",
+    homeLink: "Guarda le integrazioni",
     connects: "Si collega a",
     cards: [
       { icon: "users", t: "Contatti e lead nel vostro CRM", d: "Ogni richiesta dal sito arriva nel CRM, alla persona o alla sede giusta, con i campi che servono ai vostri commerciali.",

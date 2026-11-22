@@ -255,6 +255,11 @@ ${risparmiaBlock(SAVE.risparmia, c)}
 <div class="split-txt reveal"><p class="eyebrow">${h.notoria.eyebrow}</p><h2 class="h2">${esc(h.notoria.title)}</h2><p class="lead">${esc(h.notoria.sub)}</p>
 <a class="btn btn-light" href="${c.href('notoria/')}">${h.notoria.link}${icon('arrow')}</a></div>
 ${notoCanvas(c)}
+</div>
+<div class="wrap noto-int"><div class="sec-head reveal"><p class="eyebrow">${esc(NOTORIA.integr.eyebrow)}</p><h3 class="h3-xl">${esc(NOTORIA.integr.title)}</h3><p class="lead">${esc(NOTORIA.integr.homeSub)}</p></div>
+${flowSchema(NOTORIA.integr)}
+<ul class="punti-r reveal">${NOTORIA.integr.cards.map((k) => `<li>${esc(k.t)}</li>`).join('')}</ul>
+<div class="btn-row reveal"><a class="btn btn-light" href="${c.href('notoria/', 'integrazioni')}">${esc(NOTORIA.integr.homeLink)}${icon('arrow')}</a></div>
 </div></section>
 
 <section class="sec sec-white" id="metodo"><div class="wrap">${sectionHead(h.method.eyebrow, h.method.title, h.method.sub)}${methodBlock()}</div></section>
@@ -341,16 +346,17 @@ ${ctaBlock(c, 'Vuoi sapere dove stai spendendo troppo?', 'Partiamo da un primo i
 // Schemi animati delle integrazioni: caselle HTML; fili e puntini li disegna site.js misurando le caselle.
 const flowNode = (g, n, icn, cls = '') => `<div class="nodo${cls}" data-n="${n}">${icon(icn, 'ic')}<b>${esc(g.nodes[n][0])}</b><span>${esc(g.nodes[n][1])}</span></div>`;
 const ovali = (c, logos) => `<ul class="ovali">${logos.map(([f, n, w, h, withName, wide]) => `<li${wide ? ' class="largo"' : ''}><img src="${c.asset(`img/${f}.webp`)}" alt="${withName ? '' : esc(n)}" width="${w}" height="${h}" loading="lazy" decoding="async">${withName ? `<b>${esc(n)}</b>` : ''}</li>`).join('')}</ul>`;
+const flowSchema = (g) => `<div class="schema reveal"><h3>${esc(g.flowTitle)}</h3><p>${esc(g.flowSub)}</p>
+<div class="flusso f1" data-flusso="cli>sito,sito>noto,noto>crm,noto>help,noto>pers" data-ritorno="sistemi>cli" role="img" aria-label="${esc(g.flowAlt)}"><svg class="fili" aria-hidden="true" focusable="false"></svg>
+${flowNode(g, 'cli', 'users')}${flowNode(g, 'sito', 'layers')}${flowNode(g, 'noto', 'spark', ' cuore')}
+<div class="uscite" data-n="sistemi">${flowNode(g, 'crm', 'users')}${flowNode(g, 'help', 'chat')}${flowNode(g, 'pers', 'pin')}</div>
+<span class="rit">${esc(g.back)}</span></div></div>`;
 function integrBlock(c, g) {
   return `<section class="sec sec-white" id="integrazioni"><div class="wrap">${sectionHead(g.eyebrow, g.title, g.sub)}
 <div class="cards cards-3">${g.cards.map((k) => `<article class="card card-grey reveal">${icon(k.icon, 'ic ic-lg')}<h3>${esc(k.t)}</h3><p>${esc(k.d)}</p><p class="et">${esc(k.logos ? g.connects : k.note)}</p>${k.logos ? ovali(c, k.logos) : ''}</article>`).join('')}</div>
 </div></section>
 <section class="sec sec-black noto-sec"><div class="wrap">
-<div class="schema reveal"><h3>${esc(g.flowTitle)}</h3><p>${esc(g.flowSub)}</p>
-<div class="flusso f1" data-flusso="cli>sito,sito>noto,noto>crm,noto>help,noto>pers" data-ritorno="sistemi>cli" role="img" aria-label="${esc(g.flowAlt)}"><svg class="fili" aria-hidden="true" focusable="false"></svg>
-${flowNode(g, 'cli', 'users')}${flowNode(g, 'sito', 'layers')}${flowNode(g, 'noto', 'spark', ' cuore')}
-<div class="uscite" data-n="sistemi">${flowNode(g, 'crm', 'users')}${flowNode(g, 'help', 'chat')}${flowNode(g, 'pers', 'pin')}</div>
-<span class="rit">${esc(g.back)}</span></div></div>
+${flowSchema(g)}
 <div class="schema reveal"><h3>${esc(g.loopTitle)}</h3><p>${esc(g.loopSub)}</p>
 <div class="flusso f2" data-anello="erp>sito2" role="img" aria-label="${esc(g.loopAlt)}"><svg class="fili" aria-hidden="true" focusable="false"></svg>
 ${flowNode(g, 'erp', 'server')}
