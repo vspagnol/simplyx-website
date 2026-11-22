@@ -278,6 +278,7 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .split-rev .split-txt { order: 2; }
 .split-txt .lead { margin-top: 18px; }
 .split-txt .btn { margin-top: 32px; }
+.save-ris { margin-top: 18px; font-size: 1.0625rem; }
 .split-img img { width: 100%; aspect-ratio: 4 / 3.4; object-fit: cover; border-radius: var(--r); }
 .wide-img img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-radius: var(--r); }
 .checks { margin-top: 28px; display: grid; gap: 12px; }

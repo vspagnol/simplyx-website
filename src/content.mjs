@@ -67,6 +67,7 @@ export const HOME = {
     title: "La tecnologia deve creare valore. Non solo costi.",
     sub: "Un percorso in tre passi per riprendere il controllo della spesa tecnologica: energia, connettività, licenze, cloud e contratti.",
     link: "Come funziona Save",
+    risparmia: "Con Risparmia AI: tutti i costi dell'azienda sotto controllo, ogni mese",
     alt: "Due professionisti analizzano dei grafici su un tablet durante una riunione di lavoro"
   },
   notoria: {
