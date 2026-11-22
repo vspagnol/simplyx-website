@@ -82,6 +82,15 @@ for (const [label, opts] of Object.entries(sizes)) {
     await page.waitForURL('**/soluzioni/energy/');
     check(true, `[${label}] dal menu mobile si arriva a Energy`);
   }
+  // SimplyX Notoria: l'animazione disegna la scritta e la pagina porta al sito del servizio
+  await page.goto(srv.url + '/notoria/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(700);
+  const noto = await page.evaluate(() => { const b = document.querySelector('[data-noto]'), cv = b.querySelector('canvas'), d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 40) n++; const r = cv.getBoundingClientRect(); return { n, dentro: r.left >= 0 && r.right <= innerWidth + 1, link: [...document.querySelectorAll('a[href="https://notoria-ai.com"]')].length }; });
+  check(noto.n > 800, `[${label}] l'animazione di Notoria disegna i puntini`, String(noto.n));
+  check(noto.dentro, `[${label}] l'animazione di Notoria resta dentro lo schermo`);
+  check(noto.link >= 2, `[${label}] la pagina Notoria porta a notoria-ai.com`);
+  await page.goto(srv.url + '/contatti/?tema=notoria', { waitUntil: 'networkidle' });
+  check((await page.inputValue('#f-tema')) === 'notoria', `[${label}] il tema Notoria arriva già selezionato`);
   // modulo contatti
   await page.goto(srv.url + '/contatti/?tema=cybersecurity', { waitUntil: 'networkidle' });
   check((await page.inputValue('#f-tema')) === 'cybersecurity', `[${label}] il tema arriva già selezionato`);

@@ -2,7 +2,7 @@
 // Variabili: SITE_URL (default https://simplyx.it), NOINDEX=1 (anteprima), LINKS=index (link con index.html, per aprire i file senza server)
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { SITE, NAV, HOME, METHOD, SAVE, LABS, CONTACT, PRIVACY, SOLUTIONS } from './content.mjs';
+import { SITE, NAV, HOME, METHOD, SAVE, LABS, CONTACT, PRIVACY, SOLUTIONS, NOTORIA } from './content.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const DIST = ROOT + 'dist/';
@@ -16,6 +16,8 @@ mkdirSync(DIST, { recursive: true });
 cpSync(ROOT + 'static/img', DIST + 'img', { recursive: true });
 mkdirSync(DIST + 'fonts');
 cpSync(ROOT + 'static/fonts/inter-var-latin.woff2', DIST + 'fonts/inter-var-latin.woff2');
+// carattere del marchio Notoria: serve solo all'animazione dei puntini, lo scarica lo script quando la sezione è vicina
+cpSync(ROOT + 'static/fonts/bricolage-grotesque-latin.woff2', DIST + 'fonts/bricolage-grotesque-latin.woff2');
 for (const f of ['favicon.ico', 'favicon.png']) cpSync(ROOT + 'static/' + f, DIST + f);
 
 function emit(dir, name, ext) {
@@ -158,7 +160,7 @@ function footer(c) {
 <div class="foot-grid">
 <div class="foot-col foot-brand"><p class="foot-name">SimplyX</p><p>${esc(SITE.tagline)}</p></div>
 <div class="foot-col"><p class="foot-h">Soluzioni</p><ul>${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}">${esc(s.brand)}</a></li>`).join('')}</ul></div>
-<div class="foot-col"><p class="foot-h">SimplyX</p><ul><li><a href="${c.href('labs/')}">SimplyX Labs</a></li><li><a href="${c.href('save/')}">SimplyX Save</a></li><li><a href="${c.href('', 'metodo')}">Metodo</a></li><li><a href="${c.href('contatti/')}">Contatti</a></li></ul></div>
+<div class="foot-col"><p class="foot-h">SimplyX</p><ul><li><a href="${c.href('labs/')}">SimplyX Labs</a></li><li><a href="${c.href('save/')}">SimplyX Save</a></li><li><a href="${c.href('notoria/')}">SimplyX Notoria</a></li><li><a href="${c.href('', 'metodo')}">Metodo</a></li><li><a href="${c.href('contatti/')}">Contatti</a></li></ul></div>
 <div class="foot-col"><p class="foot-h">Contatti</p><ul><li><a href="mailto:${SITE.email}">${SITE.email}</a></li><li><a href="tel:${SITE.phoneHref}">${SITE.phone}</a></li><li><a href="https://wa.me/${SITE.whatsappHref}" rel="noopener">WhatsApp ${SITE.whatsapp}</a></li></ul></div>
 <div class="foot-col"><p class="foot-h">Sedi</p><ul>${SITE.offices.map((o) => `<li>${o.city} — ${o.street}, ${o.zip}</li>`).join('')}</ul></div>
 </div>
@@ -209,6 +211,9 @@ const mindBlock = (lead, body) => `<section class="sec sec-black mind"><div clas
 <div class="brain reveal" data-brain role="img" aria-label="Animazione: punti luminosi si collegano con linee e triangoli fino a formare un cervello con la scritta SimplyX al centro"><canvas></canvas></div>
 </div></section>`;
 
+// rete di puntini che compone la parola "notoria" (stessa animazione del sito notoria-ai.com, con i suoi colori)
+const notoCanvas = (c) => `<div class="noto reveal" data-noto data-font="${c.asset('fonts/bricolage-grotesque-latin.woff2')}" role="img" aria-label="${esc(NOTORIA.canvasAlt)}"><canvas></canvas></div>`;
+
 const methodBlock = () => `<ol class="method">${METHOD.map((m) => `<li class="reveal"><span class="method-n">${m.n}</span><h3>${m.t}</h3><p>${esc(m.d)}</p></li>`).join('')}</ol>`;
 
 // ---- home ----
@@ -242,6 +247,12 @@ ${mindBlock(h.statement.lead, [h.statement.body])}
 <ol class="steps-mini">${SAVE.steps.map((s, i) => `<li><span>${i + 1}</span>${esc(s.t)}</li>`).join('')}</ol>
 <a class="btn btn-dark" href="${c.href('save/')}">${h.save.link}${icon('arrow')}</a></div>
 <div class="split-img reveal">${photo(c, 'team', h.save.alt, { sizes: '(min-width: 900px) 50vw, 100vw' })}</div>
+</div></section>
+
+<section class="sec sec-black noto-sec" id="notoria"><div class="wrap split">
+<div class="split-txt reveal"><p class="eyebrow">${h.notoria.eyebrow}</p><h2 class="h2">${esc(h.notoria.title)}</h2><p class="lead">${esc(h.notoria.sub)}</p>
+<a class="btn btn-light" href="${c.href('notoria/')}">${h.notoria.link}${icon('arrow')}</a></div>
+${notoCanvas(c)}
 </div></section>
 
 <section class="sec sec-white" id="metodo"><div class="wrap">${sectionHead(h.method.eyebrow, h.method.title, h.method.sub)}${methodBlock()}</div></section>
@@ -309,6 +320,28 @@ ${ctaBlock(c, 'Vuoi sapere dove stai spendendo troppo?', 'Partiamo da un primo i
   return page(c, { title: s.metaTitle, desc: s.metaDesc, jsonld: [crumbs([['Home', ''], ['SimplyX Save', c.path]]), faqLd(s.faq)] }, 'save/', body);
 }
 
+function renderNotoria() {
+  const c = ctx('notoria/');
+  const s = NOTORIA;
+  const body = `${pageHead(c, s.eyebrow, s.title, s.lead, 'Notoria')}
+<section class="sec sec-black noto-sec noto-band"><div class="wrap">
+${notoCanvas(c)}
+<div class="noto-txt reveal"><h2 class="h2">${esc(s.band.title)}</h2><p class="lead">${esc(s.band.sub)}</p>
+<div class="btn-row btn-row-center"><a class="btn btn-light" href="${s.url}" rel="noopener">${esc(s.band.cta)}${icon('arrow')}</a></div></div>
+</div></section>
+<section class="sec sec-white"><div class="wrap">${sectionHead('Come funziona', 'Tre passi. Il primo lo facciamo noi.')}
+<div class="cards cards-3">${s.steps.map((k, i) => `<article class="card card-grey reveal"><span class="card-n">${i + 1}</span><h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div></div></section>
+<section class="sec sec-grey"><div class="wrap">${sectionHead('Servizi', s.services.title, s.services.sub)}
+<div class="cards cards-3">${s.services.items.map((k) => `<article class="card card-white reveal">${icon(k.icon, 'ic ic-lg')}<h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div>
+<p class="sec-foot reveal"><a class="link" href="${s.url}" rel="noopener">Tutti i servizi e i pacchetti su ${esc(s.urlLabel)}${icon('chevron')}</a></p></div></section>
+<section class="sec sec-black"><div class="wrap">${sectionHead('A chi serve', s.who.title)}
+<div class="cards cards-3">${s.who.items.map((k) => `<article class="card card-dark reveal"><h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div></div></section>
+${faqBlock(s.faq)}
+${ctaBlock(c, 'Vuoi vedere come sarebbe il tuo sito?', 'Scrivici il nome della tua attività: ti prepariamo un\'anteprima, senza impegno.', 'notoria')}`;
+  const service = { '@context': 'https://schema.org', '@type': 'Service', name: 'SimplyX Notoria', alternateName: 'Notoria AI', url: SITE_URL + '/' + c.path, sameAs: s.url, description: s.metaDesc, provider: { '@id': ORG['@id'] || SITE_URL + '/#org' }, areaServed: 'IT' };
+  return page(c, { title: s.metaTitle, desc: s.metaDesc, jsonld: [crumbs([['Home', ''], ['SimplyX Notoria', c.path]]), service, faqLd(s.faq)] }, 'notoria/', body);
+}
+
 function renderLabs() {
   const c = ctx('labs/');
   const l = LABS;
@@ -367,7 +400,7 @@ function render404() {
 }
 
 // ---- scrittura ----
-const pages = [['', renderHome()], ['save/', renderSave()], ['labs/', renderLabs()], ['contatti/', renderContact()], ['privacy/', renderPrivacy()], ...SOLUTIONS.map((s) => [solPath(s.slug), renderSolution(s)])];
+const pages = [['', renderHome()], ['save/', renderSave()], ['notoria/', renderNotoria()], ['labs/', renderLabs()], ['contatti/', renderContact()], ['privacy/', renderPrivacy()], ...SOLUTIONS.map((s) => [solPath(s.slug), renderSolution(s)])];
 for (const [p, html] of pages) {
   mkdirSync(DIST + p, { recursive: true });
   writeFileSync(DIST + p + 'index.html', html);

@@ -317,4 +317,57 @@
       if (!form.hasAttribute('data-no-open')) location.href = href;
     });
   }
+  // SimplyX Notoria: una rete di puntini si raccoglie e compone la parola "notoria", poi si scioglie e ricomincia.
+  (function () {
+    var boxes = [].slice.call(doc.querySelectorAll('[data-noto]'));
+    if (!boxes.length || !window.requestAnimationFrame) return;
+    var COL = ['#ffffff', '#ffbe0b', '#ff5a1f', '#ffffff'], FAM = '"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif', CICLO = 14000;
+    function ease(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+    function Noto(box) { this.box = box; this.cv = box.querySelector('canvas'); this.cx = this.cv.getContext('2d'); this.visible = false; this.ready = false; this.pts = []; }
+    Noto.prototype.build = function () {
+      var W = this.box.clientWidth, H = this.box.clientHeight; if (!W || !H) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2); this.W = W; this.H = H;
+      this.cv.width = W * dpr; this.cv.height = H * dpr; this.cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var o = doc.createElement('canvas'); o.width = W; o.height = H; var c = o.getContext('2d'), px = Math.round(H * .86);
+      c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = '800 ' + px + 'px ' + FAM;
+      var lw = c.measureText('notoria').width; if (lw > W * .94) { px = Math.floor(px * W * .94 / lw); c.font = '800 ' + px + 'px ' + FAM; }
+      c.fillText('notoria', W / 2, H / 2 + px * .05);
+      var d = c.getImageData(0, 0, W, H).data, step = Math.max(4.2, W / 109), out = [], x, y, k = 0, s = this.s = W / 980;
+      for (y = step / 2; y < H; y += step) for (x = step / 2; x < W; x += step) if (d[((y | 0) * W + (x | 0)) * 4 + 3] > 120) {
+        out.push({ tx: x + (Math.random() - .5) * step * .33, ty: y + (Math.random() - .5) * step * .33, sx: Math.random() * W, sy: Math.random() * H, fa: Math.random() * 6.28, ve: .3 + Math.random() * .6, r: Math.max(k % 9 === 0 ? 1.7 : 1.05, (k % 9 === 0 ? 3.2 : 1.9) * s), c: COL[k % 4], rit: Math.random() * .35 }); k++;
+      }
+      this.pts = out; this.link = step * step * 4.1; this.ready = true;
+    };
+    Noto.prototype.draw = function (ms, still) {
+      if (!this.ready) return;
+      var cx = this.cx, P = this.pts, s = Math.max(.45, this.s), f = (ms % CICLO) / CICLO, k, i, j, p, pos = [];
+      if (still) k = 1; else if (f < .42) k = 1; else if (f < .58) k = 1 - (f - .42) / .16; else if (f < .68) k = 0; else k = (f - .68) / .32;
+      cx.clearRect(0, 0, this.W, this.H);
+      for (i = 0; i < P.length; i++) {
+        p = P[i]; var kk = ease(Math.max(0, Math.min(1, (k - p.rit) / .65)));
+        var vx = p.sx + Math.cos(p.fa + ms * .0004 * p.ve) * 46 * s, vy = p.sy + Math.sin(p.fa * 1.3 + ms * .0005 * p.ve) * 34 * s;
+        var mx = p.tx + Math.cos(p.fa + ms * .002) * 1.2 * s, my = p.ty + Math.sin(p.fa + ms * .002) * 1.2 * s;
+        pos.push([vx + (mx - vx) * kk, vy + (my - vy) * kk]);
+      }
+      cx.lineWidth = 1;
+      for (i = 0; i < pos.length; i++) for (j = i + 1; j < Math.min(pos.length, i + 26); j++) {
+        var dx = pos[i][0] - pos[j][0], dy = pos[i][1] - pos[j][1], q = dx * dx + dy * dy;
+        if (q < this.link) { cx.strokeStyle = 'rgba(255,214,150,' + (.42 * (1 - q / this.link)).toFixed(3) + ')'; cx.beginPath(); cx.moveTo(pos[i][0], pos[i][1]); cx.lineTo(pos[j][0], pos[j][1]); cx.stroke(); }
+      }
+      for (i = 0; i < pos.length; i++) { p = P[i]; cx.fillStyle = p.c; cx.beginPath(); cx.arc(pos[i][0], pos[i][1], p.r, 0, 6.2832); cx.fill(); }
+    };
+    var all = boxes.map(function (b) { return new Noto(b); }), started = false;
+    function start() {
+      if (started) return; started = true;
+      all.forEach(function (n) { n.build(); n.draw(0, true); });
+      if ('ResizeObserver' in window) { var ro = new ResizeObserver(function () { all.forEach(function (n) { if (n.box.clientWidth !== n.W) { n.build(); n.draw(0, true); } }); }); all.forEach(function (n) { ro.observe(n.box); }); }
+      if (reduce || !('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (en) { en.forEach(function (x) { all.forEach(function (n) { if (n.box === x.target) { n.visible = x.isIntersecting; if (x.isIntersecting && !n.t0) n.t0 = performance.now(); } }); }); }, { threshold: .05 });
+      all.forEach(function (n) { io.observe(n.box); });
+      (function loop(now) { all.forEach(function (n) { if (n.visible) n.draw(now - n.t0, false); }); requestAnimationFrame(loop); })(performance.now());
+    }
+    // il carattere del marchio Notoria si scarica solo qui; se non arriva, la scritta usa il carattere di sistema
+    var url = boxes[0].getAttribute('data-font');
+    if (window.FontFace && doc.fonts && url) { new FontFace('Bricolage Grotesque', 'url(' + url + ') format("woff2")', { weight: '200 800' }).load().then(function (ff) { doc.fonts.add(ff); start(); }, start); setTimeout(start, 2500); } else start();
+  })();
 })();

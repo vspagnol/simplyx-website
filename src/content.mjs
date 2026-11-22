@@ -22,6 +22,7 @@ export const NAV = [
   { label: "Soluzioni", menu: true },
   { label: "Labs", path: "labs/" },
   { label: "Save", path: "save/" },
+  { label: "Notoria", path: "notoria/" },
   { label: "Metodo", path: "", hash: "metodo" },
   { label: "Contatti", path: "contatti/" }
 ];
@@ -67,6 +68,12 @@ export const HOME = {
     sub: "Un percorso in tre passi per riprendere il controllo della spesa tecnologica: energia, connettività, licenze, cloud e contratti.",
     link: "Come funziona Save",
     alt: "Due professionisti analizzano dei grafici su un tablet durante una riunione di lavoro"
+  },
+  notoria: {
+    eyebrow: "SimplyX Notoria",
+    title: "Da nome qualunque a nome noto.",
+    sub: "Ti prepariamo il sito senza costi e ogni mese ti facciamo trovare: Google, scheda dell'attività, recensioni, social e campagne.",
+    link: "Scopri Notoria"
   },
   method: {
     eyebrow: "Metodo",
@@ -127,6 +134,53 @@ export const SAVE = {
   ]
 };
 
+export const NOTORIA = {
+  url: "https://notoria-ai.com",
+  urlLabel: "notoria-ai.com",
+  metaTitle: "SimplyX Notoria — Sito gratuito e marketing ogni mese",
+  metaDesc: "SimplyX Notoria fa trovare la tua azienda: sito preparato senza costi e, ogni mese, Google, scheda dell'attività, recensioni, social e campagne.",
+  eyebrow: "SimplyX Notoria",
+  title: "Da nome qualunque a nome noto.",
+  lead: "Notoria AI è il servizio SimplyX che fa trovare la tua azienda. Ti prepariamo il sito senza costi e ogni mese curiamo quello che serve per farti notare: Google, scheda dell'attività, recensioni, social e campagne.",
+  canvasAlt: "Animazione: una rete di punti in movimento compone la parola notoria",
+  band: {
+    title: "Fatti notare.",
+    sub: "Notorio vuol dire conosciuto da tutti. È quello che vogliamo per la tua azienda, nella tua zona o nel tuo mercato.",
+    cta: "Vai al sito di Notoria AI"
+  },
+  steps: [
+    { t: "Ti prepariamo il sito", d: "Partiamo da quello che di te si trova già in rete: nome, indirizzo, orari, servizi. Ti mandiamo un'anteprima vera, già con il tuo nome sopra." },
+    { t: "Lo guardi e lo approvi", d: "Ci dici cosa cambiare. Finché non ti convince, non firmi e non paghi nulla." },
+    { t: "Ti facciamo trovare", d: "Il sito va online e comincia il lavoro di ogni mese, con un resoconto chiaro di quello che abbiamo fatto." }
+  ],
+  services: {
+    title: "Cosa facciamo ogni mese",
+    sub: "Scegli solo quello che ti serve. Il resto lo puoi aggiungere quando vuoi.",
+    items: [
+      { icon: "search", t: "Sito e Google", d: "Un sito veloce e curato, scritto perché chi ti cerca capisca subito cosa fai e come contattarti." },
+      { icon: "pin", t: "Scheda Google e recensioni", d: "Orari, foto e servizi sempre aggiornati. Ti aiutiamo a chiedere le recensioni e a rispondere." },
+      { icon: "chat", t: "Post sui social", d: "Un piano di post ogni mese per LinkedIn, Instagram, Facebook e YouTube. Li approvi tu prima che escano." },
+      { icon: "spark", t: "Campagne mirate", d: "Annunci su Google e sui social per la tua zona o il tuo settore, con un tetto di spesa deciso da te." },
+      { icon: "mail", t: "Email e WhatsApp", d: "Messaggi ai tuoi clienti per novità, promemoria e offerte, solo a chi ha dato il consenso." },
+      { icon: "chart", t: "Resoconto mensile", d: "Ogni mese sai cosa abbiamo fatto, quante persone ti hanno trovato e quante ti hanno contattato." }
+    ]
+  },
+  who: {
+    title: "Per chi è",
+    items: [
+      { t: "Attività e negozi", d: "Ristoranti, saloni, negozi, strutture ricettive: chi vive di clienti della zona e vuole essere trovato da chi passa di lì." },
+      { t: "Professionisti e studi", d: "Chi lavora sulla fiducia e ha bisogno di una presenza seria, aggiornata e facile da trovare." },
+      { t: "PMI e grandi aziende", d: "Chi ha già un sito, magari vecchio o lento, e vuole rifarlo e farlo lavorare senza un reparto interno." }
+    ]
+  },
+  faq: [
+    { q: "Il sito è davvero gratuito?", a: "Sì. Ti prepariamo il sito senza costi e lo vedi prima di decidere. Paghi un canone mensile solo se scegli di andare online con noi: il canone copre il lavoro di ogni mese." },
+    { q: "Devo firmare qualcosa per vedere l'anteprima?", a: "No. Guardi l'anteprima, ci dici cosa cambiare e decidi con calma. Finché non ti convince, non firmi e non paghi nulla." },
+    { q: "Garantite la prima posizione su Google?", a: "No, e nessuno può farlo seriamente. Ti promettiamo un lavoro fatto bene e un resoconto chiaro ogni mese, con i numeri veri." },
+    { q: "Che rapporto c'è tra Notoria AI e SimplyX?", a: "Notoria AI è un servizio di SimplyX, con un sito e un marchio propri. Le persone, il metodo e i contatti sono gli stessi." }
+  ]
+};
+
 export const LABS = {
   metaTitle: "SimplyX Labs — I prodotti che costruiamo",
   metaDesc: "Nei SimplyX Labs nascono prodotti digitali nostri: Bellaria AI, Advoca AI, InvestAI, Curaria AI e Casa di Melo. È qui che mettiamo alla prova il nostro metodo.",
@@ -159,6 +213,7 @@ export const CONTACT = {
   lead: "Raccontaci in due righe cosa ti serve. Ti rispondiamo con idee concrete e con i prossimi passi.",
   topics: [
     ["save", "Risparmiare sulla spesa"],
+    ["notoria", "Sito e marketing (Notoria)"],
     ["energy", "Energia e impianti"],
     ["data-center", "Rete o data center"],
     ["software", "Software o app"],

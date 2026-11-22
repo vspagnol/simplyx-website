@@ -49,6 +49,8 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .btn-blue:hover { background: var(--blue-hover); }
 .btn-dark { background: var(--ink); color: #fff; }
 .btn-dark:hover { background: #000; }
+.btn-light { background: #fff; color: #000; }
+.btn-light:hover { background: #e8e8ed; }
 .btn-ghost-light { color: #fff; border-color: rgba(255,255,255,.55); background: rgba(255,255,255,.06); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
 .btn-ghost-light:hover { background: rgba(255,255,255,.16); border-color: #fff; }
 .btn-ghost-dark { color: var(--ink); border-color: var(--line); }
@@ -189,6 +191,13 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .card-n { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 600; margin-bottom: 8px; }
 
 /* blocchi affiancati */
+/* SimplyX Notoria: la parola "notoria" composta dai puntini, con i colori caldi del suo marchio su fondo nero */
+.noto-sec { background: radial-gradient(70% 60% at 50% 40%, #2a0a14 0%, #0d0306 55%, #000 100%); }
+.noto { width: 100%; max-width: 980px; aspect-ratio: 980 / 300; margin-inline: auto; min-width: 0; }
+.noto canvas { display: block; width: 100%; height: 100%; }
+.noto-band .noto-txt { text-align: center; max-width: 720px; margin: clamp(20px, 4vw, 44px) auto 0; }
+.noto-band .noto-txt .lead { margin-top: 16px; } .noto-band .btn-row { margin-top: 32px; }
+.noto-sec .eyebrow { color: #ffbe0b; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
 .split-rev .split-txt { order: 2; }
 .split-txt .lead { margin-top: 18px; }
