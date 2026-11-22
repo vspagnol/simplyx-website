@@ -107,6 +107,23 @@ export const SAVE = {
     { icon: "spark", t: "Troviamo le opportunità", d: "Confrontiamo consumi reali e condizioni contrattuali. Ti indichiamo cosa rinegoziare, cosa spegnere, cosa sostituire e cosa conviene lasciare com'è." },
     { icon: "chart", t: "Monitoriamo nel tempo", d: "Il risparmio va mantenuto. Teniamo sotto controllo scadenze, consumi e rinnovi, e ti avvisiamo prima che un costo riparta." }
   ],
+  risparmia: {
+    eyebrow: "Risparmia AI",
+    title: "Tutti i costi dell'azienda, sotto controllo ogni mese.",
+    sub: "Save lavora con Risparmia AI, il servizio SimplyX che verifica e tiene d'occhio le spese. Per le aziende: una verifica iniziale su cinque aree, un resoconto mensile e un piano di risparmio a 24 mesi, pagato solo con una parte del risparmio effettivo.",
+    flowTitle: "Tutti i costi in un solo punto",
+    flowSub: "Ogni puntino è una fattura o una bolletta. Arriva dalle cinque aree, viene letta e confrontata, e torna in azienda come resoconto, piano e avvisi.",
+    flowAlt: "Schema animato: fatture e bollette delle cinque aree di costo arrivano a Risparmia AI, che le legge e le confronta e restituisce resoconto mensile, piano a 24 mesi e avvisi; le correzioni tornano sui contratti.",
+    sources: [["ene", "bolt", "Energia"], ["fac", "cube", "Facility"], ["it", "server", "Informatica"], ["auto", "gauge", "Auto"], ["man", "wrench", "Manutenzioni"]],
+    hub: ["Risparmia AI", "legge e confronta"],
+    outs: [["rep", "doc", "Resoconto mensile", "per la direzione"], ["piano", "chart", "Piano a 24 mesi", "priorità e date"], ["avv", "eye", "Avvisi", "scadenze e aumenti"]],
+    back: "Le correzioni tornano sui contratti",
+    points: ["Verifica iniziale senza costi", "Integrazione con il gestionale, dopo un'analisi", "Si paga solo sul risparmio effettivo"],
+    link: "Risparmia AI per le aziende",
+    linkUrl: "https://risparmia-ai.com/aziende/",
+    link2: "Per privati e professionisti",
+    link2Url: "https://risparmia-ai.com/"
+  },
   areas: {
     title: "Dove guardiamo",
     items: [

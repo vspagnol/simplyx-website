@@ -95,6 +95,12 @@ for (const [label, opts] of Object.entries(sizes)) {
   check(integ.link === 1 && !/partner|certificat/i.test(integ.testo), `[${label}] Notoria: link alla pagina aziende e nessuna parola da evitare`);
   await page.goto(srv.url + '/contatti/?tema=notoria', { waitUntil: 'networkidle' });
   check((await page.inputValue('#f-tema')) === 'notoria', `[${label}] il tema Notoria arriva già selezionato`);
+  // SimplyX Save: schema dei costi e collegamento a Risparmia AI
+  await page.goto(srv.url + '/save/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+  const sv = await page.evaluate(() => { const f = document.querySelector('#risparmia .flusso'); return { fili: f.querySelectorAll('.fili path').length, fuori: [...f.querySelectorAll('.nodo,.rit')].filter((e) => { const r = e.getBoundingClientRect(); return r.left < -1 || r.right > innerWidth + 1; }).length, alt: (f.getAttribute('aria-label') || '').length > 40, link: document.querySelectorAll('a[href="https://risparmia-ai.com/aziende/"]').length, testo: document.querySelector('#risparmia').textContent }; });
+  check(sv.fili === 9 && sv.fuori === 0 && sv.alt, `[${label}] Save: lo schema dei costi è disegnato, dentro lo schermo e descritto`, JSON.stringify([sv.fili, sv.fuori]));
+  check(sv.link === 1 && !/\d\s?%|garanti/i.test(sv.testo), `[${label}] Save: link a Risparmia AI e nessuna percentuale promessa`);
   // modulo contatti
   await page.goto(srv.url + '/contatti/?tema=cybersecurity', { waitUntil: 'networkidle' });
   check((await page.inputValue('#f-tema')) === 'cybersecurity', `[${label}] il tema arriva già selezionato`);

@@ -304,6 +304,21 @@ const pageHead = (c, eyebrow, title, lead, name) => `<section class="phead"><div
 <nav class="crumbs crumbs-dark hero-fade" aria-label="Percorso"><ol><li><a href="${c.href('')}">Home</a></li><li aria-current="page">${esc(name)}</li></ol></nav>
 <p class="eyebrow hero-fade">${esc(eyebrow)}</p><h1 class="h1 hero-fade">${esc(title)}</h1>${lead ? `<p class="lead hero-fade">${esc(lead)}</p>` : ''}</div></section>`;
 
+// SimplyX Save: schema animato dei costi (stesso motore degli schemi di Notoria, nei colori SimplyX) e link a Risparmia AI.
+function risparmiaBlock(g) {
+  const n = (id, icn, t, sub, cls = '') => `<div class="nodo${cls}" data-n="${id}">${icon(icn, 'ic')}<b>${esc(t)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`;
+  return `<section class="sec sec-black" id="risparmia"><div class="wrap">${sectionHead(g.eyebrow, g.title, g.sub)}
+<div class="schema schema-blu reveal"><h3>${esc(g.flowTitle)}</h3><p>${esc(g.flowSub)}</p>
+<div class="flusso f1 f-costi" data-flusso="${g.sources.map((x) => x[0] + '>hub').join(',')},${g.outs.map((x) => 'hub>' + x[0]).join(',')}" data-ritorno="uscite>fonti" role="img" aria-label="${esc(g.flowAlt)}"><svg class="fili" aria-hidden="true" focusable="false"></svg>
+<div class="fonti" data-n="fonti">${g.sources.map(([id, icn, t]) => n(id, icn, t)).join('')}</div>
+${n('hub', 'spark', g.hub[0], g.hub[1], ' cuore')}
+<div class="uscite" data-n="uscite">${g.outs.map(([id, icn, t, sub]) => n(id, icn, t, sub)).join('')}</div>
+<span class="rit">${esc(g.back)}</span></div></div>
+<ul class="punti-r reveal">${g.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+<div class="btn-row reveal"><a class="btn btn-light" href="${g.linkUrl}" rel="noopener">${esc(g.link)}${icon('arrow')}</a><a class="btn btn-ghost-light" href="${g.link2Url}" rel="noopener">${esc(g.link2)}</a></div>
+</div></section>`;
+}
+
 function renderSave() {
   const c = ctx('save/');
   const s = SAVE;
@@ -311,6 +326,7 @@ function renderSave() {
 <section class="sec sec-white sec-tight"><div class="wrap"><div class="wide-img reveal">${photo(c, 'team', s.alt, { lazy: false, sizes: '(min-width: 1200px) 1120px, 100vw' })}</div></div></section>
 <section class="sec sec-white"><div class="wrap">${sectionHead('Come funziona', 'Tre passi per riprendere il controllo.')}
 <div class="cards cards-3">${s.steps.map((k, i) => `<article class="card card-grey reveal"><span class="card-n">${i + 1}</span><h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div></div></section>
+${risparmiaBlock(s.risparmia)}
 <section class="sec sec-grey"><div class="wrap">${sectionHead('Ambiti', s.areas.title, 'Sei voci che di solito nessuno guarda insieme.')}
 <div class="cards cards-3">${s.areas.items.map((k) => `<article class="card card-white reveal">${icon(k.icon, 'ic ic-lg')}<h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div></div></section>
 <section class="sec sec-black"><div class="wrap">${sectionHead('Principi', s.principles.title)}
