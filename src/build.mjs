@@ -409,4 +409,22 @@ writeFileSync(DIST + '404.html', render404());
 const today = new Date().toISOString().slice(0, 10);
 writeFileSync(DIST + 'sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter(([p]) => p !== 'privacy/').map(([p]) => `<url><loc>${SITE_URL}/${p}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync(DIST + 'robots.txt', NOINDEX ? 'User-agent: *\nDisallow: /\n' : `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+// Intestazioni per Cloudflare (file _headers): le stesse regole di sicurezza e di cache di deploy/nginx.conf.
+// nginx ignora questo file: sulla VM continua a valere nginx.conf.
+writeFileSync(DIST + '_headers', `/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+${NOINDEX ? '  X-Robots-Tag: noindex, nofollow\n' : ''}/css/*
+  Cache-Control: public, max-age=31536000, immutable
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=2592000
+/img/*
+  Cache-Control: public, max-age=2592000
+`);
 console.log(`Sito generato: ${pages.length + 1} pagine in dist/ (SITE_URL=${SITE_URL}${NOINDEX ? ', NOINDEX' : ''})`);
