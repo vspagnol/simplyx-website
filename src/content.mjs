@@ -67,7 +67,6 @@ export const HOME = {
     title: "La tecnologia deve creare valore. Non solo costi.",
     sub: "Un percorso in tre passi per riprendere il controllo della spesa tecnologica: energia, connettività, licenze, cloud e contratti.",
     link: "Come funziona Save",
-    risparmia: "Con Risparmia AI: tutti i costi dell'azienda sotto controllo, ogni mese",
     alt: "Due professionisti analizzano dei grafici su un tablet durante una riunione di lavoro"
   },
   notoria: {
@@ -112,6 +111,8 @@ export const SAVE = {
     eyebrow: "Risparmia AI",
     title: "Tutti i costi dell'azienda, sotto controllo ogni mese.",
     sub: "Save lavora con Risparmia AI, il servizio SimplyX che verifica e tiene d'occhio le spese. Per le aziende: una verifica su cinque aree, un resoconto mensile e un piano di risparmio a 24 mesi, pagato solo con una parte del risparmio effettivo.",
+    homeSub: "Risparmia AI è il servizio SimplyX che verifica e tiene d'occhio le spese: energia, sedi, informatica, auto e manutenzioni. Un resoconto ogni mese e un piano di risparmio a 24 mesi, pagato solo con una parte del risparmio effettivo.",
+    homeLink: "Come lavora con Save",
     flowTitle: "Tutti i costi in un solo punto",
     flowSub: "Ogni puntino è una fattura o una bolletta. Arriva dalle cinque aree, viene letta e confrontata, e torna in azienda come resoconto, piano e avvisi.",
     flowAlt: "Schema animato: fatture e bollette delle cinque aree di costo arrivano a Risparmia AI, che le legge e le confronta e restituisce resoconto mensile, piano a 24 mesi e avvisi; le correzioni tornano sui contratti.",

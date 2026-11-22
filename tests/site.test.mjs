@@ -101,6 +101,10 @@ for (const [label, opts] of Object.entries(sizes)) {
   const sv = await page.evaluate(() => { const f = document.querySelector('#risparmia .flusso'); return { fili: f.querySelectorAll('.fili path').length, fuori: [...f.querySelectorAll('.nodo,.rit')].filter((e) => { const r = e.getBoundingClientRect(); return r.left < -1 || r.right > innerWidth + 1; }).length, alt: (f.getAttribute('aria-label') || '').length > 40, link: document.querySelectorAll('a[href="https://risparmia-ai.com/aziende/"]').length, testo: document.querySelector('#risparmia').textContent }; });
   check(sv.fili === 9 && sv.fuori === 0 && sv.alt, `[${label}] Save: lo schema dei costi è disegnato, dentro lo schermo e descritto`, JSON.stringify([sv.fili, sv.fuori]));
   check(sv.link === 1 && !/\d\s?%|garanti/i.test(sv.testo), `[${label}] Save: link a Risparmia AI e nessuna percentuale promessa`);
+  await page.goto(srv.url + '/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
+  const hr = await page.evaluate(() => { const f = document.querySelector('#risparmia .flusso'); return f ? [f.querySelectorAll('.fili path').length, document.querySelectorAll('#risparmia a[href="https://risparmia-ai.com/aziende/"]').length] : null; });
+  check(hr && hr[0] === 9 && hr[1] === 1, `[${label}] home: sezione Risparmia AI con lo schema e il link`, JSON.stringify(hr));
   // modulo contatti
   await page.goto(srv.url + '/contatti/?tema=cybersecurity', { waitUntil: 'networkidle' });
   check((await page.inputValue('#f-tema')) === 'cybersecurity', `[${label}] il tema arriva già selezionato`);

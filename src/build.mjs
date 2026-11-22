@@ -245,10 +245,11 @@ ${mindBlock(h.statement.lead, [h.statement.body])}
 <section class="sec sec-grey" id="save"><div class="wrap split">
 <div class="split-txt reveal"><p class="eyebrow">${h.save.eyebrow}</p><h2 class="h2">${esc(h.save.title)}</h2><p class="lead">${esc(h.save.sub)}</p>
 <ol class="steps-mini">${SAVE.steps.map((s, i) => `<li><span>${i + 1}</span>${esc(s.t)}</li>`).join('')}</ol>
-<a class="btn btn-dark" href="${c.href('save/')}">${h.save.link}${icon('arrow')}</a>
-<p class="save-ris"><a class="link" href="${c.href('save/', 'risparmia')}">${esc(h.save.risparmia)}${icon('chevron')}</a></p></div>
+<a class="btn btn-dark" href="${c.href('save/')}">${h.save.link}${icon('arrow')}</a></div>
 <div class="split-img reveal">${photo(c, 'team', h.save.alt, { sizes: '(min-width: 900px) 50vw, 100vw' })}</div>
 </div></section>
+
+${risparmiaBlock(SAVE.risparmia, c)}
 
 <section class="sec sec-black noto-sec" id="notoria"><div class="wrap split">
 <div class="split-txt reveal"><p class="eyebrow">${h.notoria.eyebrow}</p><h2 class="h2">${esc(h.notoria.title)}</h2><p class="lead">${esc(h.notoria.sub)}</p>
@@ -306,17 +307,17 @@ const pageHead = (c, eyebrow, title, lead, name) => `<section class="phead"><div
 <p class="eyebrow hero-fade">${esc(eyebrow)}</p><h1 class="h1 hero-fade">${esc(title)}</h1>${lead ? `<p class="lead hero-fade">${esc(lead)}</p>` : ''}</div></section>`;
 
 // SimplyX Save: schema animato dei costi (stesso motore degli schemi di Notoria, nei colori SimplyX) e link a Risparmia AI.
-function risparmiaBlock(g) {
+function risparmiaBlock(g, home) {
   const n = (id, icn, t, sub, cls = '') => `<div class="nodo${cls}" data-n="${id}">${icon(icn, 'ic')}<b>${esc(t)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`;
-  return `<section class="sec sec-black" id="risparmia"><div class="wrap">${sectionHead(g.eyebrow, g.title, g.sub)}
-<div class="schema schema-blu reveal"><h3>${esc(g.flowTitle)}</h3><p>${esc(g.flowSub)}</p>
+  return `<section class="sec ${home ? 'sec-white' : 'sec-black'}" id="risparmia"><div class="wrap">${sectionHead(g.eyebrow, g.title, home ? g.homeSub : g.sub)}
+<div class="schema schema-blu${home ? ' schema-scuro' : ''} reveal"><h3>${esc(g.flowTitle)}</h3><p>${esc(g.flowSub)}</p>
 <div class="flusso f1 f-costi" data-flusso="${g.sources.map((x) => x[0] + '>hub').join(',')},${g.outs.map((x) => 'hub>' + x[0]).join(',')}" data-ritorno="uscite>fonti" role="img" aria-label="${esc(g.flowAlt)}"><svg class="fili" aria-hidden="true" focusable="false"></svg>
 <div class="fonti" data-n="fonti">${g.sources.map(([id, icn, t]) => n(id, icn, t)).join('')}</div>
 ${n('hub', 'spark', g.hub[0], g.hub[1], ' cuore')}
 <div class="uscite" data-n="uscite">${g.outs.map(([id, icn, t, sub]) => n(id, icn, t, sub)).join('')}</div>
 <span class="rit">${esc(g.back)}</span></div></div>
 <ul class="punti-r reveal">${g.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
-<div class="btn-row reveal"><a class="btn btn-light" href="${g.linkUrl}" rel="noopener">${esc(g.link)}${icon('arrow')}</a><a class="btn btn-ghost-light" href="${g.link2Url}" rel="noopener">${esc(g.link2)}</a></div>
+<div class="btn-row reveal"><a class="btn ${home ? 'btn-dark' : 'btn-light'}" href="${g.linkUrl}" rel="noopener">${esc(g.link)}${icon('arrow')}</a>${home ? `<a class="btn btn-ghost-dark" href="${home.href('save/')}">${esc(g.homeLink)}</a>` : `<a class="btn btn-ghost-light" href="${g.link2Url}" rel="noopener">${esc(g.link2)}</a>`}</div>
 </div></section>`;
 }
 

@@ -16,3 +16,7 @@ Ramo: `redesign-2026-11`. Nulla è stato toccato sulla VM o su altri progetti.
 
 ## Test
 12 pagine × 3 formati: 375 controlli superati, 0 falliti. Verifica a schermo su 1440 e 390.
+
+## Aggiornamento: sezione in home
+- Su richiesta del proprietario, la home ha ora una sezione «Risparmia AI» con lo stesso schema animato, tra Save e Notoria, su fondo chiaro con il pannello scuro. Porta a risparmia-ai.com/aziende e alla pagina Save.
+- Test: 378 controlli superati, 0 falliti.
