@@ -270,7 +270,7 @@ export const CONTACT = {
     ["cybersecurity", "Cybersecurity"],
     ["altro", "Altro"]
   ],
-  formNote: "Il modulo non invia nulla in automatico: prepara un'email nella tua app di posta, che puoi rileggere e inviare tu.",
+  formNote: "Il modulo prepara il messaggio nella tua app di posta o in WhatsApp: lo rileggi e premi Invia.",
   privacyNote: "I dati che ci scrivi servono solo a risponderti."
 };
 

@@ -111,10 +111,13 @@ for (const [label, opts] of Object.entries(sizes)) {
   await page.goto(srv.url + '/contatti/?tema=cybersecurity', { waitUntil: 'networkidle' });
   check((await page.inputValue('#f-tema')) === 'cybersecurity', `[${label}] il tema arriva già selezionato`);
   await page.evaluate(() => document.querySelector('[data-contact]').setAttribute('data-no-open', ''));
-  await page.click('[data-contact] button[type=submit]');
+  await page.click('[data-contact] button[data-via=email]');
   check(await page.isVisible('.form-err'), `[${label}] modulo vuoto: messaggio di errore`);
   await page.fill('#f-nome', 'Mario Rossi'); await page.fill('#f-msg', 'Vorrei un incontro.');
-  await page.click('[data-contact] button[type=submit]');
+  await page.click('[data-contact] button[data-via=wa]');
+  const wa = await page.getAttribute('[data-contact]', 'data-mailto');
+  check(!!wa && wa.startsWith('https://wa.me/393755454980?text=') && decodeURIComponent(wa).includes('Mario Rossi'), `[${label}] il modulo prepara il messaggio WhatsApp`);
+  await page.click('[data-contact] button[data-via=email]');
   const mailto = await page.getAttribute('[data-contact]', 'data-mailto');
   check(!!mailto && mailto.startsWith('mailto:info@simplyx.it?subject=') && decodeURIComponent(mailto).includes('Mario Rossi') && decodeURIComponent(mailto).includes('Cybersecurity'), `[${label}] il modulo prepara l'email corretta`);
   check(await page.isVisible('.form-ok'), `[${label}] conferma visibile dopo l'invio`);

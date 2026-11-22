@@ -312,7 +312,10 @@
       var lines = [f.messaggio.value.trim(), '', '—', f.nome.value.trim()];
       if (f.azienda.value.trim()) lines.push(f.azienda.value.trim());
       if (f.telefono.value.trim()) lines.push('Tel. ' + f.telefono.value.trim());
-      var href = 'mailto:' + form.dataset.to + '?subject=' + encodeURIComponent('Richiesta dal sito — ' + topic) + '&body=' + encodeURIComponent(lines.join('\n'));
+      var via = (e.submitter && e.submitter.getAttribute('data-via')) || 'email';
+      var href = via === 'wa'
+        ? 'https://wa.me/' + form.dataset.wa + '?text=' + encodeURIComponent(['Richiesta dal sito — ' + topic, ''].concat(lines).join('\n'))
+        : 'mailto:' + form.dataset.to + '?subject=' + encodeURIComponent('Richiesta dal sito — ' + topic) + '&body=' + encodeURIComponent(lines.join('\n'));
       form.dataset.mailto = href; fb.href = href; ok.hidden = false;
       if (!form.hasAttribute('data-no-open')) location.href = href;
     });

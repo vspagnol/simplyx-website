@@ -408,16 +408,16 @@ function renderContact() {
   const k = CONTACT;
   const body = `${pageHead(c, k.eyebrow, k.title, k.lead, 'Contatti')}
 <section class="sec sec-white sec-tight"><div class="wrap contact">
-<form class="form reveal" data-contact data-to="${SITE.email}" novalidate>
+<form class="form reveal" data-contact data-to="${SITE.email}" data-wa="${SITE.whatsappHref}" novalidate>
 <div class="field"><label for="f-nome">Nome e cognome</label><input id="f-nome" name="nome" type="text" autocomplete="name" required></div>
 <div class="field"><label for="f-azienda">Azienda <span class="opt">(facoltativo)</span></label><input id="f-azienda" name="azienda" type="text" autocomplete="organization"></div>
 <div class="field"><label for="f-tel">Telefono <span class="opt">(facoltativo)</span></label><input id="f-tel" name="telefono" type="tel" autocomplete="tel"></div>
 <div class="field"><label for="f-tema">Di cosa vuoi parlare?</label><select id="f-tema" name="tema">${k.topics.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</select></div>
 <div class="field field-full"><label for="f-msg">Messaggio</label><textarea id="f-msg" name="messaggio" rows="5" required></textarea></div>
 <p class="form-err" role="alert" hidden>Inserisci nome e messaggio per preparare la richiesta.</p>
-<div class="field-full"><button class="btn btn-blue" type="submit">Prepara la richiesta${icon('arrow')}</button></div>
+<div class="field-full form-btns"><button class="btn btn-blue" type="submit" data-via="email">Invia per email${icon('arrow')}</button><button class="btn btn-ghost-dark" type="submit" data-via="wa">Invia su WhatsApp</button></div>
 <p class="form-note field-full">${esc(k.formNote)} ${esc(k.privacyNote)} <a href="${c.href('privacy/')}">Privacy</a>.</p>
-<p class="form-ok field-full" role="status" hidden>Email pronta nella tua app di posta. Se non si è aperta, <a data-fallback href="mailto:${SITE.email}">scrivi a ${SITE.email}</a>.</p>
+<p class="form-ok field-full" role="status" hidden>Richiesta pronta nella tua app: premi Invia. Se non si è aperta, <a data-fallback href="mailto:${SITE.email}">tocca qui</a> oppure scrivi a ${SITE.email}.</p>
 </form>
 <aside class="contact-side reveal" aria-label="Recapiti">
 <ul class="contact-list">
