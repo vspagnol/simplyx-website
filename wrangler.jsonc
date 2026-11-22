@@ -1,7 +1,7 @@
 // Pubblicazione su Cloudflare (Workers, solo file statici). Nessun dominio qui: l'indirizzo di prova è *.workers.dev.
 // Il dominio simplyx.it si collega solo con l'OK del proprietario, dopo aver copiato i record della posta.
 {
-  "name": "simplyx-site",
+  "name": "simplyx-website",
   "compatibility_date": "2026-06-01",
   "assets": { "directory": "./dist", "not_found_handling": "404-page" }
 }
