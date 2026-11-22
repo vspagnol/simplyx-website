@@ -116,7 +116,7 @@ for (const [label, opts] of Object.entries(sizes)) {
   await page.fill('#f-nome', 'Mario Rossi'); await page.fill('#f-msg', 'Vorrei un incontro.');
   await page.click('[data-contact] button[type=submit]');
   const mailto = await page.getAttribute('[data-contact]', 'data-mailto');
-  check(!!mailto && mailto.startsWith('mailto:contatti@simplyx.it?subject=') && decodeURIComponent(mailto).includes('Mario Rossi') && decodeURIComponent(mailto).includes('Cybersecurity'), `[${label}] il modulo prepara l'email corretta`);
+  check(!!mailto && mailto.startsWith('mailto:info@simplyx.it?subject=') && decodeURIComponent(mailto).includes('Mario Rossi') && decodeURIComponent(mailto).includes('Cybersecurity'), `[${label}] il modulo prepara l'email corretta`);
   check(await page.isVisible('.form-ok'), `[${label}] conferma visibile dopo l'invio`);
   await ctx.close();
 }

@@ -6,7 +6,7 @@ export const SITE = {
   legal: "SimplyX S.r.l.s.",
   vat: "10864421218",
   pec: "simplyxsrls@arubapec.it",
-  email: "contatti@simplyx.it",
+  email: "info@simplyx.it",
   phone: "+39 081 286 532 31",
   phoneHref: "+3908128653231",
   whatsapp: "+39 375 5454 980",
@@ -280,11 +280,11 @@ export const PRIVACY = {
   title: "Privacy e cookie",
   draft: "Bozza in attesa di revisione legale. Prima della pubblicazione su simplyx.it il testo va completato e approvato.",
   sections: [
-    { h: "Chi tratta i dati", p: ["Il titolare del trattamento è SimplyX S.r.l.s., P. IVA 10864421218, con sedi in Via Domenico Cimarosa 89, 80127 Napoli e Viale Monza 1, 20125 Milano. Email: contatti@simplyx.it — PEC: simplyxsrls@arubapec.it."] },
+    { h: "Chi tratta i dati", p: ["Il titolare del trattamento è SimplyX S.r.l.s., P. IVA 10864421218, con sedi in Via Domenico Cimarosa 89, 80127 Napoli e Viale Monza 1, 20125 Milano. Email: info@simplyx.it — PEC: simplyxsrls@arubapec.it."] },
     { h: "Quali dati raccogliamo", p: ["Il sito non richiede registrazione. Se ci scrivi per email, telefono o WhatsApp, trattiamo i dati che ci comunichi (ad esempio nome, azienda, recapiti e contenuto del messaggio) solo per risponderti.", "Il modulo di contatto non invia dati ai nostri sistemi: prepara un'email nella tua app di posta, che scegli tu se inviare."] },
     { h: "Cookie", p: ["Il sito non usa cookie di profilazione né strumenti di tracciamento di terze parti. Font, immagini e script sono serviti direttamente dal nostro dominio."] },
     { h: "Per quanto tempo", p: ["Conserviamo le richieste ricevute per il tempo necessario a gestirle e per gli eventuali obblighi di legge. [Da completare con i tempi di conservazione.]"] },
-    { h: "I tuoi diritti", p: ["Puoi chiederci in ogni momento accesso, rettifica, cancellazione, limitazione od opposizione al trattamento scrivendo a contatti@simplyx.it. Hai inoltre il diritto di proporre reclamo al Garante per la protezione dei dati personali."] }
+    { h: "I tuoi diritti", p: ["Puoi chiederci in ogni momento accesso, rettifica, cancellazione, limitazione od opposizione al trattamento scrivendo a info@simplyx.it. Hai inoltre il diritto di proporre reclamo al Garante per la protezione dei dati personali."] }
   ]
 };
 
