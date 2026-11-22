@@ -191,6 +191,62 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .card-n { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 600; margin-bottom: 8px; }
 
 /* blocchi affiancati */
+/* SimplyX Notoria, integrazioni: loghi in ovali bianchi uguali e due schemi animati (caselle HTML, fili disegnati da site.js) */
+.et { margin-top: auto; padding-top: 10px; font-size: .8125rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.ovali { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ovali li { height: 68px; border-radius: 99px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; min-width: 0; }
+.ovali li.largo { grid-column: 1 / -1; }
+.ovali img { max-width: 100%; height: auto; flex: 0 1 auto; }
+.ovali b { font-weight: 700; font-size: 1.0625rem; color: #1f1f1f; }
+.schema { border-radius: var(--r); padding: 40px 40px 44px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); }
+.schema + .schema { margin-top: 20px; }
+.schema h3 { font-size: clamp(1.5rem, 3vw, 2.125rem); line-height: 1.1; letter-spacing: -.025em; font-weight: 650; }
+.schema > p { color: var(--on-dark-2); max-width: 40em; margin-top: 10px; }
+.flusso { position: relative; display: grid; align-items: center; margin-top: 40px; }
+.fili { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; overflow: visible; pointer-events: none; }
+.fili .f { fill: none; stroke: rgba(255,214,150,.38); stroke-width: 2; stroke-linecap: round; }
+.fili .f.torna { stroke-dasharray: 2 8; stroke: rgba(255,190,11,.6); }
+.fili .p0 { fill: #ffbe0b; } .fili .p1 { fill: #ff7a45; } .fili .p2 { fill: #fff; }
+.nodo { position: relative; z-index: 1; background: #24121b; border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 3px; min-width: 0; min-height: 112px; justify-content: center; }
+.nodo .ic { width: 26px; height: 26px; color: #ffbe0b; margin-bottom: 8px; }
+.nodo b { font-size: 1.125rem; line-height: 1.15; letter-spacing: -.02em; font-weight: 650; }
+.nodo span { color: var(--on-dark-2); font-size: .875rem; line-height: 1.3; }
+.nodo.cuore { background: linear-gradient(100deg, #d4145a, #de3410); border-color: transparent; box-shadow: 0 0 0 8px rgba(255,90,31,.16), 0 18px 50px -10px rgba(244,82,15,.7); }
+.nodo.cuore .ic, .nodo.cuore span { color: #fff; }
+.f1 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.15fr); gap: 70px; padding-bottom: 70px; }
+.uscite { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.uscite .nodo { min-height: 0; padding: 14px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; align-items: center; }
+.uscite .nodo .ic { grid-row: span 2; margin: 0; }
+.rit { position: absolute; z-index: 1; left: 50%; bottom: 6px; transform: translateX(-50%); white-space: nowrap; font-size: .875rem; font-weight: 600; color: #ffbe0b; background: #1b0b12; border: 1px solid rgba(255,190,11,.45); padding: 7px 14px; border-radius: 99px; }
+.f2 { --g: 48; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr); gap: 0; }
+.corsie { display: grid; grid-template-rows: 1fr 96px 1fr; justify-items: center; padding-inline: 20px; min-width: 0; }
+.corsie .ca { grid-row: 1; align-self: end; display: flex; flex-direction: column; align-items: center; gap: 8px; padding-bottom: 6px; }
+.corsie .cb { grid-row: 3; align-self: start; display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.chips li { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); color: #fff; border-radius: 99px; padding: 7px 13px; font-size: .875rem; font-weight: 600; line-height: 1.2; }
+.verso { font-size: .8125rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #ffbe0b; text-align: center; }
+.fine-nota { margin-top: 18px; font-size: .8125rem; color: var(--on-dark-2); max-width: 52em; }
+@media (max-width: 1000px) { .f1 { gap: 40px; } }
+@media (max-width: 860px) {
+  .schema { padding: 28px 20px 30px; }
+  .f1 { grid-template-columns: minmax(0, 1fr); gap: 40px; padding: 0 0 0 30px; }
+  .f1 > .nodo { min-height: 0; }
+  .uscite { flex-direction: row; gap: 8px; }
+  .uscite .nodo { flex: 1; display: flex; padding: 12px 10px; align-items: flex-start; justify-content: flex-start; }
+  .uscite .nodo .ic { margin-bottom: 6px; }
+  .uscite .nodo b { font-size: .9375rem; } .uscite .nodo span { font-size: .78rem; }
+  .rit { position: static; transform: none; justify-self: start; margin-top: -18px; white-space: normal; }
+  .f2 { --g: 34; grid-template-columns: minmax(0, 1fr); }
+  .f2 > .nodo { justify-self: center; width: min(100%, 260px); align-items: center; text-align: center; }
+  .corsie { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) 68px minmax(0, 1fr); padding: 26px 0; align-items: center; justify-items: stretch; }
+  .corsie .ca { grid-row: 1; grid-column: 3; align-self: center; align-items: flex-start; padding: 0 0 0 12px; min-width: 0; }
+  .corsie .cb { grid-row: 1; grid-column: 1; align-self: center; align-items: flex-end; padding: 0 12px 0 0; min-width: 0; flex-direction: column-reverse; }
+  .corsie .chips { flex-direction: column; } .corsie .ca .chips { align-items: flex-start; } .corsie .cb .chips { align-items: flex-end; }
+  .corsie .ca .verso { text-align: left; } .corsie .cb .verso { text-align: right; }
+  .chips li { font-size: .8125rem; padding: 6px 9px; } .verso { font-size: .72rem; letter-spacing: .03em; max-width: 100%; }
+}
+@media (max-width: 360px) { .ovali li { padding: 0 10px; gap: 6px; height: 62px; } .ovali b { font-size: .9rem; } .ovali li > img:not(:only-child) { width: 26px; } }
+
 /* SimplyX Notoria: la parola "notoria" composta dai puntini, con i colori caldi del suo marchio su fondo nero */
 .noto-sec { background: radial-gradient(70% 60% at 50% 40%, #2a0a14 0%, #0d0306 55%, #000 100%); }
 .noto { width: 100%; max-width: 980px; aspect-ratio: 980 / 300; margin-inline: auto; min-width: 0; }

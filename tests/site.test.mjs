@@ -89,6 +89,10 @@ for (const [label, opts] of Object.entries(sizes)) {
   check(noto.n > 800, `[${label}] l'animazione di Notoria disegna i puntini`, String(noto.n));
   check(noto.dentro, `[${label}] l'animazione di Notoria resta dentro lo schermo`);
   check(noto.link >= 2, `[${label}] la pagina Notoria porta a notoria-ai.com`);
+  const integ = await page.evaluate(() => ({ loghi: [...document.querySelectorAll('.ovali img')].map((i) => { i.loading = 'eager'; return !!(i.alt || i.parentNode.textContent.trim()); }), schemi: [...document.querySelectorAll('.flusso')].map((f) => [f.querySelectorAll('.fili path').length, [...f.querySelectorAll('.nodo,.chips li,.verso,.rit')].filter((e) => { const r = e.getBoundingClientRect(); return r.left < -1 || r.right > innerWidth + 1; }).length, (f.getAttribute('aria-label') || '').length > 40]), link: document.querySelectorAll('a[href="https://notoria-ai.com/aziende/"]').length, testo: document.querySelector('main').textContent }));
+  check(integ.loghi.length === 9 && integ.loghi.every(Boolean), `[${label}] Notoria: nove loghi con il loro nome`, String(integ.loghi.length));
+  check(integ.schemi.length === 2 && integ.schemi[0][0] === 6 && integ.schemi[1][0] === 1 && integ.schemi.every((x) => x[1] === 0 && x[2]), `[${label}] Notoria: i due schemi sono disegnati, dentro lo schermo e descritti`, JSON.stringify(integ.schemi));
+  check(integ.link === 1 && !/partner|certificat/i.test(integ.testo), `[${label}] Notoria: link alla pagina aziende e nessuna parola da evitare`);
   await page.goto(srv.url + '/contatti/?tema=notoria', { waitUntil: 'networkidle' });
   check((await page.inputValue('#f-tema')) === 'notoria', `[${label}] il tema Notoria arriva già selezionato`);
   // modulo contatti

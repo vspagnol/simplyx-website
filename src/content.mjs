@@ -165,6 +165,32 @@ export const NOTORIA = {
       { icon: "chart", t: "Resoconto mensile", d: "Ogni mese sai cosa abbiamo fatto, quante persone ti hanno trovato e quante ti hanno contattato." }
     ]
   },
+  integr: {
+    eyebrow: "Per le aziende",
+    title: "Il vostro sito, collegato ai vostri sistemi.",
+    sub: "Per un'azienda il sito è il punto da cui entrano clienti, richieste e assistenza. Notoria lo collega agli strumenti che usate già. Ogni integrazione è un progetto su misura, dopo un'analisi.",
+    connects: "Si collega a",
+    cards: [
+      { icon: "users", t: "Contatti e lead nel vostro CRM", d: "Ogni richiesta dal sito arriva nel CRM, alla persona o alla sede giusta, con i campi che servono ai vostri commerciali.",
+        logos: [["crm-salesforce", "Salesforce", 62, 44], ["crm-hubspot", "HubSpot", 117, 34], ["crm-dynamics", "Microsoft Dynamics 365", 114, 35], ["crm-zoho", "Zoho CRM", 111, 36], ["crm-pipedrive", "Pipedrive", 34, 34, true]] },
+      { icon: "chat", t: "Assistenza e ticket dal sito", d: "Il cliente apre una segnalazione dal sito e voi la trovate nel vostro help desk, già con i dati che servono per rispondere.",
+        logos: [["help-zendesk", "Zendesk", 132, 29], ["help-freshdesk", "Freshdesk", 117, 34], ["help-jira", "Jira Service Management", 228, 20, false, true], ["help-zohodesk", "Zoho Desk", 94, 42]] },
+      { icon: "server", t: "Gestionale ed ERP, dopo un'analisi", d: "Listini, disponibilità, ordini e fatture possono arrivare sul sito dal vostro gestionale. Partiamo sempre da un'analisi del sistema che avete, e vi diciamo prima cosa si può fare e cosa no.", note: "Dipende dal vostro sistema" }
+    ],
+    flowTitle: "Dal sito ai vostri sistemi, e ritorno",
+    flowSub: "Ogni puntino è una richiesta, un lead o un ticket. Entra dal sito, viene riconosciuto e arriva nel posto giusto. Poi la risposta torna al cliente.",
+    flowAlt: "Schema animato: le richieste partono dal cliente, passano dal sito e da Notoria e arrivano al CRM, all'help desk e alla persona giusta; la risposta torna al cliente.",
+    nodes: { cli: ["Il cliente", "chiede, compra, segnala"], sito: ["Il vostro sito", "moduli e richieste"], noto: ["Notoria", "riconosce e smista"], crm: ["CRM", "lead e richieste"], help: ["Help desk", "ticket di assistenza"], pers: ["La persona giusta", "sede o reparto"], erp: ["Il vostro gestionale", "ERP"], sito2: ["Il vostro sito", "sempre aggiornato"] },
+    back: "La risposta torna al cliente",
+    loopTitle: "Sito e gestionale, sempre allineati",
+    loopSub: "Dal gestionale arrivano sul sito listini, disponibilità e fatture. Dal sito tornano ordini e richieste. È uno schema di esempio: cosa si può collegare lo dice l'analisi.",
+    loopAlt: "Schema animato: i dati girano in cerchio tra il gestionale e il sito. Listini, disponibilità e fatture vanno dal gestionale al sito; ordini e richieste dal sito al gestionale.",
+    toSite: ["Dal gestionale al sito", ["Listini", "Disponibilità", "Fatture"]],
+    toErp: ["Dal sito al gestionale", ["Ordini", "Richieste"]],
+    link: "Tutti i dettagli per le aziende su notoria-ai.com",
+    linkUrl: "https://notoria-ai.com/aziende/",
+    fine: "Ogni integrazione è un progetto su misura, con tempi e costi concordati prima. I marchi citati appartengono ai rispettivi proprietari."
+  },
   who: {
     title: "Per chi è",
     items: [

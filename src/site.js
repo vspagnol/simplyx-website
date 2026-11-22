@@ -370,4 +370,61 @@
     var url = boxes[0].getAttribute('data-font');
     if (window.FontFace && doc.fonts && url) { new FontFace('Bricolage Grotesque', 'url(' + url + ') format("woff2")', { weight: '200 800' }).load().then(function (ff) { doc.fonts.add(ff); start(); }, start); setTimeout(start, 2500); } else start();
   })();
+  // SimplyX Notoria, integrazioni: fili e puntini dei due schemi animati (stessa logica del sito notoria-ai.com).
+  (function () {
+    var NS = 'http://www.w3.org/2000/svg';
+    if (!doc.querySelector('.flusso')) return;
+  function crea(nome, attr){ var e = doc.createElementNS(NS, nome); for (var k in attr) e.setAttribute(k, attr[k]); return e; }
+    function n1(v){ return Math.round(v * 10) / 10; }
+
+    function disegna(box){
+      var svg = box.querySelector('.fili'), o = box.getBoundingClientRect(), k = 0;
+      if (!o.width) return;
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.setAttribute('viewBox', '0 0 ' + n1(o.width) + ' ' + n1(o.height));
+      function R(nome){ var e = box.querySelector('[data-n="' + nome + '"]').getBoundingClientRect(); return { l: n1(e.left - o.left), t: n1(e.top - o.top), r: n1(e.right - o.left), b: n1(e.bottom - o.top), cx: n1((e.left + e.right) / 2 - o.left), cy: n1((e.top + e.bottom) / 2 - o.top) }; }
+      function filo(d, classe, quanti, durata, sfasa){
+        svg.appendChild(crea('path', { d: d, 'class': classe }));
+        if (reduce) return;
+        for (var i = 0; i < quanti; i++) {
+          var c = crea('circle', { r: 4.5, 'class': 'p' + (k++ % 3) });
+          c.appendChild(crea('animateMotion', { dur: durata + 's', begin: '-' + n1(sfasa + i * durata / quanti) + 's', repeatCount: 'indefinite', path: d }));
+          svg.appendChild(c);
+        }
+      }
+      (box.getAttribute('data-flusso') || '').split(',').filter(Boolean).forEach(function(coppia, i){
+        var p = coppia.split('>'), a = R(p[0]), b = R(p[1]), m, d;
+        if (b.l >= a.r - 2) { m = n1((b.l - a.r) / 2); d = 'M' + a.r + ',' + a.cy + ' C' + (a.r + m) + ',' + a.cy + ' ' + (b.l - m) + ',' + b.cy + ' ' + b.l + ',' + b.cy; }
+        else { m = n1((b.t - a.b) / 2); d = 'M' + a.cx + ',' + a.b + ' C' + a.cx + ',' + (a.b + m) + ' ' + b.cx + ',' + (b.t - m) + ' ' + b.cx + ',' + b.t; }
+        filo(d, 'f', 2, 2.8, i * 0.45);
+      });
+      var rit = box.getAttribute('data-ritorno');
+      if (rit) {
+        var q = rit.split('>'), a = R(q[0]), b = R(q[1]), r = 16, d, y, x;
+        if (a.l >= b.r - 2) { y = n1(o.height - 24); d = 'M' + a.cx + ',' + a.b + ' L' + a.cx + ',' + (y - r) + ' Q' + a.cx + ',' + y + ' ' + (a.cx - r) + ',' + y + ' L' + (b.cx + r) + ',' + y + ' Q' + b.cx + ',' + y + ' ' + b.cx + ',' + (y - r) + ' L' + b.cx + ',' + b.b; }
+        else { x = 10; d = 'M' + a.l + ',' + a.cy + ' L' + (x + r) + ',' + a.cy + ' Q' + x + ',' + a.cy + ' ' + x + ',' + (a.cy - r) + ' L' + x + ',' + (b.cy + r) + ' Q' + x + ',' + b.cy + ' ' + (x + r) + ',' + b.cy + ' L' + b.l + ',' + b.cy; }
+        filo(d, 'f torna', 3, 7.5, 1);
+      }
+      var an = box.getAttribute('data-anello');
+      if (an) {
+        var z = an.split('>'), s = R(z[0]), e = R(z[1]), g = parseFloat(getComputedStyle(box).getPropertyValue('--g')) || 48, d2;
+        if (e.l >= s.r - 2) d2 = 'M' + s.cx + ',' + (s.cy - g) + ' L' + e.cx + ',' + (e.cy - g) + ' A' + g + ',' + g + ' 0 0 1 ' + e.cx + ',' + (e.cy + g) + ' L' + s.cx + ',' + (s.cy + g) + ' A' + g + ',' + g + ' 0 0 1 ' + s.cx + ',' + (s.cy - g) + ' Z';
+        else d2 = 'M' + (s.cx + g) + ',' + s.cy + ' L' + (e.cx + g) + ',' + e.cy + ' A' + g + ',' + g + ' 0 0 1 ' + (e.cx - g) + ',' + e.cy + ' L' + (s.cx - g) + ',' + s.cy + ' A' + g + ',' + g + ' 0 0 1 ' + (s.cx + g) + ',' + s.cy + ' Z';
+        filo(d2, 'f', 8, 11, 0);
+      }
+    }
+
+    var schemi = Array.prototype.slice.call(doc.querySelectorAll('.flusso'));
+    schemi.forEach(function(box){
+      var attesa = 0;
+      function rifai(){ cancelAnimationFrame(attesa); attesa = requestAnimationFrame(function(){ disegna(box); }); }
+      rifai();
+      if ('ResizeObserver' in window) new ResizeObserver(rifai).observe(box);
+      else window.addEventListener('resize', rifai);
+      if ('IntersectionObserver' in window && !reduce) new IntersectionObserver(function(es){ es.forEach(function(x){ var s = box.querySelector('.fili'); if (s.pauseAnimations) { if (x.isIntersecting) s.unpauseAnimations(); else s.pauseAnimations(); } }); }, { rootMargin: '80px' }).observe(box);
+    });
+
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function(){ schemi.forEach(function (b) { disegna(b); }); });
+    window.addEventListener('load', function () { schemi.forEach(function (b) { disegna(b); }); });
+  })();
 })();

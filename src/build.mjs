@@ -320,6 +320,29 @@ ${ctaBlock(c, 'Vuoi sapere dove stai spendendo troppo?', 'Partiamo da un primo i
   return page(c, { title: s.metaTitle, desc: s.metaDesc, jsonld: [crumbs([['Home', ''], ['SimplyX Save', c.path]]), faqLd(s.faq)] }, 'save/', body);
 }
 
+// Schemi animati delle integrazioni: caselle HTML; fili e puntini li disegna site.js misurando le caselle.
+const flowNode = (g, n, icn, cls = '') => `<div class="nodo${cls}" data-n="${n}">${icon(icn, 'ic')}<b>${esc(g.nodes[n][0])}</b><span>${esc(g.nodes[n][1])}</span></div>`;
+const ovali = (c, logos) => `<ul class="ovali">${logos.map(([f, n, w, h, withName, wide]) => `<li${wide ? ' class="largo"' : ''}><img src="${c.asset(`img/${f}.webp`)}" alt="${withName ? '' : esc(n)}" width="${w}" height="${h}" loading="lazy" decoding="async">${withName ? `<b>${esc(n)}</b>` : ''}</li>`).join('')}</ul>`;
+function integrBlock(c, g) {
+  return `<section class="sec sec-white" id="integrazioni"><div class="wrap">${sectionHead(g.eyebrow, g.title, g.sub)}
+<div class="cards cards-3">${g.cards.map((k) => `<article class="card card-grey reveal">${icon(k.icon, 'ic ic-lg')}<h3>${esc(k.t)}</h3><p>${esc(k.d)}</p><p class="et">${esc(k.logos ? g.connects : k.note)}</p>${k.logos ? ovali(c, k.logos) : ''}</article>`).join('')}</div>
+</div></section>
+<section class="sec sec-black noto-sec"><div class="wrap">
+<div class="schema reveal"><h3>${esc(g.flowTitle)}</h3><p>${esc(g.flowSub)}</p>
+<div class="flusso f1" data-flusso="cli>sito,sito>noto,noto>crm,noto>help,noto>pers" data-ritorno="sistemi>cli" role="img" aria-label="${esc(g.flowAlt)}"><svg class="fili" aria-hidden="true" focusable="false"></svg>
+${flowNode(g, 'cli', 'users')}${flowNode(g, 'sito', 'layers')}${flowNode(g, 'noto', 'spark', ' cuore')}
+<div class="uscite" data-n="sistemi">${flowNode(g, 'crm', 'users')}${flowNode(g, 'help', 'chat')}${flowNode(g, 'pers', 'pin')}</div>
+<span class="rit">${esc(g.back)}</span></div></div>
+<div class="schema reveal"><h3>${esc(g.loopTitle)}</h3><p>${esc(g.loopSub)}</p>
+<div class="flusso f2" data-anello="erp>sito2" role="img" aria-label="${esc(g.loopAlt)}"><svg class="fili" aria-hidden="true" focusable="false"></svg>
+${flowNode(g, 'erp', 'server')}
+<div class="corsie"><div class="ca"><span class="verso">${esc(g.toSite[0])}</span><ul class="chips">${g.toSite[1].map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div><div class="cb"><ul class="chips">${g.toErp[1].map((x) => `<li>${esc(x)}</li>`).join('')}</ul><span class="verso">${esc(g.toErp[0])}</span></div></div>
+${flowNode(g, 'sito2', 'layers')}</div></div>
+<p class="sec-foot reveal"><a class="link link-light" href="${g.linkUrl}" rel="noopener">${esc(g.link)}${icon('chevron')}</a></p>
+<p class="fine-nota reveal">${esc(g.fine)}</p>
+</div></section>`;
+}
+
 function renderNotoria() {
   const c = ctx('notoria/');
   const s = NOTORIA;
@@ -334,8 +357,9 @@ ${notoCanvas(c)}
 <section class="sec sec-grey"><div class="wrap">${sectionHead('Servizi', s.services.title, s.services.sub)}
 <div class="cards cards-3">${s.services.items.map((k) => `<article class="card card-white reveal">${icon(k.icon, 'ic ic-lg')}<h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div>
 <p class="sec-foot reveal"><a class="link" href="${s.url}" rel="noopener">Tutti i servizi e i pacchetti su ${esc(s.urlLabel)}${icon('chevron')}</a></p></div></section>
-<section class="sec sec-black"><div class="wrap">${sectionHead('A chi serve', s.who.title)}
-<div class="cards cards-3">${s.who.items.map((k) => `<article class="card card-dark reveal"><h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div></div></section>
+${integrBlock(c, s.integr)}
+<section class="sec sec-grey"><div class="wrap">${sectionHead('A chi serve', s.who.title)}
+<div class="cards cards-3">${s.who.items.map((k) => `<article class="card card-white reveal"><h3>${esc(k.t)}</h3><p>${esc(k.d)}</p></article>`).join('')}</div></div></section>
 ${faqBlock(s.faq)}
 ${ctaBlock(c, 'Vuoi vedere come sarebbe il tuo sito?', 'Scrivici il nome della tua attività: ti prepariamo un\'anteprima, senza impegno.', 'notoria')}`;
   const service = { '@context': 'https://schema.org', '@type': 'Service', name: 'SimplyX Notoria', alternateName: 'Notoria AI', url: SITE_URL + '/' + c.path, sameAs: s.url, description: s.metaDesc, provider: { '@id': ORG['@id'] || SITE_URL + '/#org' }, areaServed: 'IT' };
