@@ -346,7 +346,18 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .m-loop i { position: absolute; bottom: -6px; left: 100%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px rgba(0,113,227,.16); opacity: 0; animation: m-torna 10s linear infinite; }
 @keyframes m-torna { 0%, 88% { left: 100%; opacity: 0; } 89% { left: 100%; opacity: 1; } 98% { left: 0; opacity: 1; } 100% { left: 0; opacity: 0; } }
 /* fuori schermo le animazioni restano ferme */
-.js .m-wrap:not(.vista) *, .js .m-wrap:not(.vista) *::after { animation-play-state: paused; }
+.js [data-method]:not(.vista) *, .js [data-method]:not(.vista) *::after { animation-play-state: paused; }
+/* tre modi per iniziare: disegno animato in cima a ogni scheda */
+.p-art { margin: -16px -16px 10px; border-radius: 18px; background: linear-gradient(180deg, #fff, #eef5ff); color: var(--blue); }
+.p-art svg { display: block; width: 100%; height: auto; max-height: 170px; }
+.p-bar { transform-box: fill-box; transform-origin: 50% 100%; animation: p-cala 6s var(--ease) infinite; }
+.p-trend { animation-delay: 1.2s; } .p-art .a-tip { animation: p-punta 6s var(--ease) infinite; }
+.p-ago { transform-origin: 120px 60px; animation: p-bussola 7s ease-in-out infinite; }
+.p-ring { transform-origin: 120px 60px; animation: p-onda 3.5s ease-out infinite; }
+@keyframes p-cala { 0%, 8% { transform: scaleY(1); } 40%, 90% { transform: scaleY(var(--s)); } 100% { transform: scaleY(1); } }
+@keyframes p-punta { 0%, 52% { opacity: 0; } 58%, 88% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes p-bussola { 0% { transform: rotate(-70deg); } 22% { transform: rotate(48deg); } 38% { transform: rotate(14deg); } 52% { transform: rotate(34deg); } 64%, 86% { transform: rotate(28deg); } 100% { transform: rotate(-70deg); } }
+@keyframes p-onda { 0% { transform: scale(.86); opacity: .5; } 100% { transform: scale(1.22); opacity: 0; } }
 
 /* labs */
 .rail { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-padding-inline: max(var(--gut), calc((100vw - var(--wrap)) / 2)); }
@@ -468,7 +479,7 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
   .js .reveal, .js .hero-fade { opacity: 1; transform: none; }
-  .m-wrap *, .m-wrap *::after { animation: none !important; } .m-badge { background: var(--blue); border-color: var(--blue); color: #fff; } .m-line i { transform: none; }
+  .m-wrap *, .m-wrap *::after, .p-art * { animation: none !important; } .p-bar { transform: scaleY(var(--s)); } .p-ago { transform: rotate(28deg); } .m-badge { background: var(--blue); border-color: var(--blue); color: #fff; } .m-line i { transform: none; }
 }
 @media print { .nav, .cta-band, .foot { display: none; } .js .reveal, .js .hero-fade { opacity: 1 !important; transform: none !important; } }
 

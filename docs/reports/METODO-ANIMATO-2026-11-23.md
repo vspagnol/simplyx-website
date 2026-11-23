@@ -9,3 +9,11 @@
 **Rinviato.** Nessuna voce.
 
 **Test.** 384 controlli superati; verifica a schermo a 1280, 820 e 390 px.
+
+## Aggiunta delle 13:55 — «Tre modi per iniziare»
+
+**Richiesta del proprietario:** movimento e animazione anche nelle tre schede Ottimizzare, Orientarsi, Realizzare.
+
+**Fatto.** Al posto dell'icona piccola ogni scheda ha un disegno animato: costi che scendono (barre e freccia), bussola che trova la direzione, livelli che si posano uno sull'altro. Stesse regole del metodo: solo CSS e SVG, fermi fuori schermo e con «meno movimento».
+
+**Test.** 384 controlli superati, due volte di seguito; verifica a schermo a 1280 e 390 px.
