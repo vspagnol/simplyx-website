@@ -161,7 +161,7 @@ function footer(c) {
 <div class="foot-col foot-brand"><p class="foot-name">SimplyX</p><p>${esc(SITE.tagline)}</p></div>
 <div class="foot-col"><p class="foot-h">Soluzioni</p><ul>${SOLUTIONS.map((s) => `<li><a href="${c.href(solPath(s.slug))}">${esc(s.brand)}</a></li>`).join('')}</ul></div>
 <div class="foot-col"><p class="foot-h">SimplyX</p><ul><li><a href="${c.href('labs/')}">SimplyX Labs</a></li><li><a href="${c.href('save/')}">SimplyX Save</a></li><li><a href="${c.href('notoria/')}">SimplyX Notoria</a></li><li><a href="${c.href('', 'metodo')}">Metodo</a></li><li><a href="${c.href('contatti/')}">Contatti</a></li></ul></div>
-<div class="foot-col"><p class="foot-h">Contatti</p><ul><li><a href="mailto:${SITE.email}">${SITE.email}</a></li><li><a href="tel:${SITE.phoneHref}">${SITE.phone}</a></li><li><a href="https://wa.me/${SITE.whatsappHref}" rel="noopener">WhatsApp ${SITE.whatsapp}</a></li></ul></div>
+<div class="foot-col"><p class="foot-h">Contatti</p><ul><li><a href="mailto:${SITE.email}">${SITE.email}</a></li><li><a href="tel:${SITE.phoneHref}">${SITE.phone}</a></li><li><a href="https://wa.me/${SITE.whatsappHref}" rel="noopener">Scrivici su WhatsApp</a></li></ul></div>
 <div class="foot-col"><p class="foot-h">Sedi</p><ul>${SITE.offices.map((o) => `<li>${o.city} — ${o.street}, ${o.zip}</li>`).join('')}</ul></div>
 </div>
 <div class="foot-legal"><p>© ${year} ${SITE.legal} · P. IVA ${SITE.vat} · PEC ${SITE.pec}</p><p><a href="${c.href('privacy/')}">Privacy e cookie</a></p></div>
@@ -430,7 +430,7 @@ function renderContact() {
 <ul class="contact-list">
 <li>${icon('mail')}<div><p class="contact-k">Email</p><a href="mailto:${SITE.email}">${SITE.email}</a></div></li>
 <li>${icon('tel')}<div><p class="contact-k">Telefono</p><a href="tel:${SITE.phoneHref}">${SITE.phone}</a></div></li>
-<li>${icon('chat')}<div><p class="contact-k">WhatsApp</p><a href="https://wa.me/${SITE.whatsappHref}" rel="noopener">${SITE.whatsapp}</a></div></li>
+<li>${icon('chat')}<div><p class="contact-k">WhatsApp</p><a href="https://wa.me/${SITE.whatsappHref}" rel="noopener">Scrivici su WhatsApp</a></div></li>
 ${SITE.offices.map((o) => `<li>${icon('pin')}<div><p class="contact-k">${o.city}</p><p>${o.street}<br>${o.zip} ${o.city}</p></div></li>`).join('')}
 </ul>
 </aside>
