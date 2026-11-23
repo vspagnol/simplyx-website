@@ -305,7 +305,8 @@ h3 { font-size: 1.3125rem; line-height: 1.2; letter-spacing: -.02em; font-weight
 .method h3 { font-size: 1.5rem; letter-spacing: -.03em; margin: 0 12px 8px; }
 .method p { color: var(--ink-2); margin: 0 12px; }
 /* sequenza: ogni dieci secondi la linea percorre le quattro fasi e accende i numeri uno dopo l'altro */
-.m-k1 .m-badge { animation: m-b1 10s infinite; } .m-k2 .m-badge { animation: m-b2 10s infinite; } .m-k3 .m-badge { animation: m-b3 10s infinite; } .m-k4 .m-badge { animation: m-b4 10s infinite; }
+.m-k1 .m-badge { animation: m-b1 10s step-end infinite; } .m-k2 .m-badge { animation: m-b2 10s step-end infinite; } .m-k3 .m-badge { animation: m-b3 10s step-end infinite; } .m-k4 .m-badge { animation: m-b4 10s step-end infinite; }
+/* il numero cambia colore di scatto: una sfumatura lenta passerebbe da tinte poco leggibili */
 .m-k1 .m-line i { animation: m-f1 10s infinite; } .m-k2 .m-line i { animation: m-f2 10s infinite; } .m-k3 .m-line i { animation: m-f3 10s infinite; } .m-k4 .m-line i { animation: m-f4 10s infinite; }
 @keyframes m-b1 { 0%, 1% { background: var(--white); border-color: var(--line); color: var(--ink-2); } 4%, 94% { background: var(--blue); border-color: var(--blue); color: #fff; } 100% { background: var(--white); border-color: var(--line); color: var(--ink-2); } }
 @keyframes m-b2 { 0%, 23% { background: var(--white); border-color: var(--line); color: var(--ink-2); } 26%, 94% { background: var(--blue); border-color: var(--blue); color: #fff; } 100% { background: var(--white); border-color: var(--line); color: var(--ink-2); } }
