@@ -38,6 +38,12 @@
     if (burger && burger.getAttribute('aria-expanded') === 'true') { setMobile(false); burger.focus(); }
   });
 
+  // metodo in quattro fasi: le animazioni girano solo quando la sezione è a schermo
+  [].forEach.call(doc.querySelectorAll('[data-method]'), function (m) {
+    if (reduce || !('IntersectionObserver' in window)) { m.classList.add('vista'); return; }
+    new IntersectionObserver(function (en) { en.forEach(function (x) { m.classList.toggle('vista', x.isIntersecting); }); }, { threshold: .15 }).observe(m);
+  });
+
   // comparsa allo scorrimento
   var items = [].slice.call(doc.querySelectorAll('.reveal'));
   if (reduce || !('IntersectionObserver' in window)) {
