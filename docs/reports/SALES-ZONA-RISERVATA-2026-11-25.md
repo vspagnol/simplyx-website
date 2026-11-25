@@ -18,4 +18,4 @@
 
 **Rinviato.** Accesso personale, versione inglese, prezzi da una sola fonte, podcast, lead e provvigioni.
 
-**Test.** 436 controlli superati con l'accesso vero provato (credenziali passate solo nell'ambiente), 409 senza credenziali; verifica a schermo a 390 e 1200 px.
+**Test.** 436 controlli superati con l'accesso vero provato (credenziali passate solo nell'ambiente), 417 senza credenziali; verifica a schermo a 390 e 1200 px.
