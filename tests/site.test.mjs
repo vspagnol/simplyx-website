@@ -121,12 +121,40 @@ for (const [label, opts] of Object.entries(sizes)) {
   const mailto = await page.getAttribute('[data-contact]', 'data-mailto');
   check(!!mailto && mailto.startsWith('mailto:info@simplyx.it?subject=') && decodeURIComponent(mailto).includes('Mario Rossi') && decodeURIComponent(mailto).includes('Cybersecurity'), `[${label}] il modulo prepara l'email corretta`);
   check(await page.isVisible('.form-ok'), `[${label}] conferma visibile dopo l'invio`);
+  // Simplyx Sales: zona riservata. La password non sta nei test: l'accesso vero si prova solo con SALES_USER e SALES_PASS nell'ambiente.
+  await page.goto(srv.url + '/sales/', { waitUntil: 'networkidle' });
+  await page.fill('#u', 'sales'); await page.fill('#p', 'password-sbagliata-di-prova');
+  await page.click('#accesso button');
+  await page.waitForSelector('#err:not([hidden])');
+  check((await page.isHidden('#app')) && (await page.isHidden('#nav')), `[${label}] Sales: con la password sbagliata non si entra`);
+  if (process.env.SALES_USER && process.env.SALES_PASS) {
+    await page.fill('#u', process.env.SALES_USER); await page.fill('#p', process.env.SALES_PASS);
+    await page.click('#accesso button');
+    await page.waitForSelector('#app .vista');
+    check((await page.locator('#nav a').count()) === 6 && (await page.locator('h1').count()) === 1, `[${label}] Sales: dopo l'accesso compaiono le sei sezioni`);
+    await page.click('#nav a[href="#notoria"]'); await page.click('[data-scheda=presenta]');
+    check((await page.locator('.copione').count()) === 2 && (await page.textContent('#app')).includes('30 secondi'), `[${label}] Sales: presentazione di Notoria da 30 secondi e 2 minuti`);
+    await page.click('#nav a[href="#simplyx"]'); await page.click('[data-scheda=breve]');
+    check((await page.textContent('#app')).includes('Impianti elettrici e meccanici'), `[${label}] Sales: Simplyx comprende impianti elettrici e meccanici`);
+    const so = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    check(so <= 0, `[${label}] Sales: nessuno scorrimento orizzontale dopo l'accesso`, `${so}px`);
+    if (label.startsWith('desktop')) { await page.evaluate(AXE); const ax = await page.evaluate(() => window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa'] })); check(ax.violations.length === 0, `[${label}] Sales: accessibilità dopo l'accesso`, ax.violations.map((v) => `${v.id} ×${v.nodes.length}`).join(', ')); }
+    await page.reload({ waitUntil: 'networkidle' }); await page.waitForSelector('#app .vista');
+    check(await page.isVisible('#esci'), `[${label}] Sales: ricaricando la pagina si resta dentro`);
+    await page.click('#esci'); await page.waitForSelector('#accesso');
+    check(await page.isHidden('#app'), `[${label}] Sales: «Esci» riporta alla richiesta di password`);
+  }
   await ctx.close();
 }
 
 // collegamenti interni e pagina 404
 const ctx = await browser.newContext();
 for (const u of links) { const r = await ctx.request.get(u); check(r.status() === 200, `collegamento interno ${u.replace(srv.url, '')}`, String(r.status())); }
+// Simplyx Sales: sul sito arrivano solo testi cifrati, e nessuna pagina pubblica porta lì
+const salesFiles = ['index.html', 'sales.js', 'sales.css', 'contenuti.enc.json'].map((f) => readFileSync(DIST + 'sales/' + f, 'utf8')).join('\n');
+check(!/taci|anteprima gratuita|Controllo gratuito|100 €|provvigion/i.test(salesFiles) && !/simplyx['"]?\s*[,;)]?\s*\/\/ ?password/i.test(salesFiles), 'Sales: nessun testo riservato in chiaro nei file pubblicati');
+check(!readFileSync(DIST + 'sitemap.xml', 'utf8').includes('/sales') && !readFileSync(DIST + 'robots.txt', 'utf8').includes('sales') && !pages.filter((p) => p !== '/sales/').some((p) => /href="[^"]*\/?sales\//.test(readFileSync(DIST + p.slice(1) + 'index.html', 'utf8'))), 'Sales: fuori da mappa e robots, nessun collegamento dalle pagine pubbliche');
+check(readFileSync(DIST + 'sales/index.html', 'utf8').includes('noindex, nofollow'), 'Sales: pagina non indicizzabile');
 const nf = await ctx.request.get(srv.url + '/non-esiste/');
 check(nf.status() === 404 && (await nf.text()).includes('Questa pagina non'), 'pagina 404 personalizzata');
 for (const f of ['sitemap.xml', 'robots.txt']) check((await ctx.request.get(srv.url + '/' + f)).status() === 200, `${f} presente`);

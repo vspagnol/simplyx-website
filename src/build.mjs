@@ -1,6 +1,6 @@
 // Generatore statico del sito SimplyX. Uso: `npm run build` → cartella dist/
 // Variabili: SITE_URL (default https://simplyx.it), NOINDEX=1 (anteprima), LINKS=index (link con index.html, per aprire i file senza server)
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { SITE, NAV, HOME, METHOD, SAVE, LABS, CONTACT, PRIVACY, SOLUTIONS, NOTORIA } from './content.mjs';
 
@@ -467,6 +467,51 @@ for (const [p, html] of pages) {
   writeFileSync(DIST + p + 'index.html', html);
 }
 writeFileSync(DIST + '404.html', render404());
+
+// ---- Simplyx Sales: zona riservata ai colleghi ----
+// Nessun collegamento dal sito, fuori dalla mappa, non indicizzata. I testi arrivano solo cifrati
+// (src/sales/contenuti.enc.json, prodotto da tools/sales-cifra.mjs): utente e password non stanno nel codice.
+if (existsSync(ROOT + 'src/sales/contenuti.enc.json')) {
+  const sv = createHash('sha256').update(['sales.css', 'sales.js', 'contenuti.enc.json'].map((f) => readFileSync(ROOT + 'src/sales/' + f)).join('')).digest('hex').slice(0, 10);
+  mkdirSync(DIST + 'sales', { recursive: true });
+  for (const f of ['sales.css', 'sales.js', 'contenuti.enc.json']) cpSync(ROOT + 'src/sales/' + f, DIST + 'sales/' + f);
+  writeFileSync(DIST + 'sales/index.html', `<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simplyx Sales — area riservata ai colleghi</title>
+<meta name="description" content="Area riservata Simplyx Sales: accesso con utente e password per i colleghi che presentano Simplyx, Notoria AI e Risparmia AI.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="${SITE_URL}/sales/">
+<link rel="icon" href="../favicon.png">
+<link rel="stylesheet" href="sales.css?v=${sv}">
+</head>
+<body>
+<header class="bar"><div class="gut"><div class="col">
+<a class="marca" href="#inizio" aria-label="Simplyx Sales, inizio"><img src="../img/logo-header.png" width="520" height="129" alt="SimplyX"><span>Sales</span></a>
+<nav class="nav" id="nav" aria-label="Sezioni" hidden></nav>
+<button class="esci" id="esci" type="button" hidden>Esci</button>
+</div></div></header>
+<main class="gut"><div class="col">
+<section class="entra" id="entra">
+<h1>Area riservata</h1>
+<p class="sotto">Per i colleghi Simplyx. Entra con l'utente e la password che hai ricevuto.</p>
+<form id="accesso" novalidate>
+<label for="u">Utente<input id="u" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+<label for="p">Password<input id="p" type="password" autocomplete="current-password" required></label>
+<button class="btn" type="submit">Entra</button>
+<p class="err" id="err" role="alert" hidden></p>
+</form>
+</section>
+<div id="app" hidden></div>
+</div></main>
+<footer class="gut"><div class="col piede">Simplyx Sales · uso interno, non inoltrare all'esterno · per segnalare un errore: ${SITE.email}</div></footer>
+<script src="sales.js?v=${sv}" defer></script>
+</body>
+</html>
+`);
+}
 const today = new Date().toISOString().slice(0, 10);
 writeFileSync(DIST + 'sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter(([p]) => p !== 'privacy/').map(([p]) => `<url><loc>${SITE_URL}/${p}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync(DIST + 'robots.txt', NOINDEX ? 'User-agent: *\nDisallow: /\n' : `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
@@ -487,5 +532,8 @@ ${NOINDEX ? '  X-Robots-Tag: noindex, nofollow\n' : ''}/css/*
   Cache-Control: public, max-age=2592000
 /img/*
   Cache-Control: public, max-age=2592000
+/sales/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-cache
 `);
 console.log(`Sito generato: ${pages.length + 1} pagine in dist/ (SITE_URL=${SITE_URL}${NOINDEX ? ', NOINDEX' : ''})`);

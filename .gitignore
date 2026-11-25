@@ -5,3 +5,6 @@ auth/*
 !auth/.gitkeep
 deploy/out/
 live/
+
+# Simplyx Sales: i testi in chiaro non entrano nel repository (qui arriva solo il file cifrato)
+src/sales/contenuti.mjs

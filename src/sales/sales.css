@@ -1,0 +1,109 @@
+/* Simplyx Sales: intranet di vendita, pagina riservata (accesso con utente e password). */
+@font-face { font-family: "Inter var"; src: url("../fonts/inter-var-latin.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+html { -webkit-text-size-adjust: 100%; } body { margin: 0; } [hidden] { display: none !important; }
+/* Impianto: testata scura fissa con le sezioni; sotto, una colonna di lettura. Ogni servizio ha le stesse sei schede, nello stesso ordine. */
+:root {
+  --bg: #ffffff; --bg-2: #f5f5f7; --ink: #1d1d1f; --ink-2: #5f6065; --line: #dcdce1;
+  --blue: #0066cc; --blue-soft: #e8f1fd; --bar: #1d1d1f; --bar-ink: #f5f5f7; --bar-ink-2: #a8a8ad;
+  --ok: #1a7f4b; --ok-soft: #e5f5ec; --no: #b3261e; --no-soft: #fdecea;
+  --font: "Inter var", -apple-system, "Helvetica Neue", Arial, sans-serif; --r: 18px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111113; --bg-2: #1c1c1f; --ink: #f5f5f7; --ink-2: #a9a9af; --line: #34343a;
+  --blue: #4da3ff; --blue-soft: #14273d; --bar: #000000; --bar-ink: #f5f5f7; --bar-ink-2: #98989d;
+  --ok: #5fd08f; --ok-soft: #12291d; --no: #ff8a80; --no-soft: #331613; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111113; --bg-2: #1c1c1f; --ink: #f5f5f7; --ink-2: #a9a9af; --line: #34343a;
+  --blue: #4da3ff; --blue-soft: #14273d; --bar: #000000; --bar-ink: #f5f5f7; --bar-ink-2: #98989d;
+  --ok: #5fd08f; --ok-soft: #12291d; --no: #ff8a80; --no-soft: #331613; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 1rem/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul, ol, table, blockquote { margin: 0; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -.02em; line-height: 1.15; }
+a { color: var(--blue); }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.col { max-width: 880px; margin: 0 auto; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--bar); color: var(--bar-ink); }
+.bar .col { display: flex; align-items: center; gap: 18px; padding-block: 10px; }
+.nav { display: flex; gap: 4px; overflow-x: auto; min-width: 0; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { flex: none; padding: 7px 13px; border-radius: 99px; color: var(--bar-ink-2); text-decoration: none; font-size: .875rem; font-weight: 500; }
+.nav a[aria-current="page"] { background: var(--bar-ink); color: var(--bar); }
+
+main { padding-block: 34px 72px; }
+.vista { display: grid; gap: 26px; }
+.capo { display: grid; gap: 10px; }
+.occhio { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); }
+h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 700; }
+.sotto { font-size: 1.125rem; color: var(--ink-2); max-width: 62ch; }
+h2 { font-size: 1.3rem; font-weight: 600; }
+h3 { font-size: 1rem; font-weight: 600; }
+.blocco { display: grid; gap: 12px; }
+.txt { max-width: 68ch; }
+.muto { color: var(--ink-2); }
+
+.porte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.porta { display: grid; gap: 8px; align-content: start; padding: 20px; border-radius: var(--r); background: var(--bg-2); text-decoration: none; color: var(--ink); min-width: 0; }
+.porta b { font-size: 1.125rem; letter-spacing: -.02em; }
+.porta span { color: var(--ink-2); font-size: .9375rem; }
+.porta i { font-style: normal; color: var(--blue); font-weight: 600; font-size: .9375rem; }
+
+.schede { display: flex; gap: 6px; overflow-x: auto; padding: 4px; border-radius: 14px; background: var(--bg-2); scrollbar-width: none; }
+.schede::-webkit-scrollbar { display: none; }
+.schede button { flex: none; padding: 8px 14px; border: 0; border-radius: 10px; background: none; color: var(--ink-2); font-size: .9375rem; font-weight: 500; }
+.schede button[aria-selected="true"] { background: var(--bg); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.14); }
+
+.passo { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: var(--r); background: var(--blue-soft); }
+.passo b { color: var(--blue); white-space: nowrap; }
+.tab { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+th, td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--line); min-width: 9.5rem; }
+th { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); font-weight: 600; background: var(--bg-2); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.elenco { display: grid; gap: 10px; padding: 0; list-style: none; counter-reset: n; }
+.elenco li { display: grid; grid-template-columns: 2rem 1fr; gap: 4px 10px; padding: 14px 16px; border-radius: 14px; background: var(--bg-2); counter-increment: n; }
+.elenco li::before { content: counter(n); grid-row: span 2; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; background: var(--bg); color: var(--blue); font-weight: 600; font-size: .875rem; font-variant-numeric: tabular-nums; }
+.elenco b { font-weight: 600; align-self: center; }
+.elenco span { grid-column: 2; color: var(--ink-2); font-size: .9375rem; }
+
+.copione { border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.copione header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px 10px 18px; background: var(--bg-2); }
+.copione header span { font-size: .8125rem; color: var(--ink-2); }
+.copione .testo { padding: 16px 18px; white-space: pre-wrap; font-size: 1rem; line-height: 1.6; max-width: 70ch; }
+.copia { flex: none; padding: 6px 13px; border: 1px solid var(--line); border-radius: 99px; background: var(--bg); font-size: .8125rem; font-weight: 600; }
+.copia.fatto { color: var(--ok); border-color: var(--ok); }
+.note { display: grid; gap: 8px; padding: 0; list-style: none; }
+.note li { padding: 10px 14px 10px 16px; border-radius: 12px; font-size: .9375rem; }
+.note.si li { background: var(--ok-soft); } .note.no li { background: var(--no-soft); }
+.note.si li b { color: var(--ok); } .note.no li b { color: var(--no); }
+.qa { display: grid; gap: 10px; }
+.qa div { padding: 14px 16px; border-radius: 14px; background: var(--bg-2); }
+.qa dt, .qa b { display: block; font-weight: 600; margin-bottom: 4px; }
+.qa p { color: var(--ink-2); }
+.piede { padding-block: 22px; border-top: 1px solid var(--line); font-size: .8125rem; color: var(--ink-2); }
+@media (max-width: 700px) { .porte { grid-template-columns: 1fr; } .bar .col { gap: 10px; } .marca span { display: none; } }
+@media (prefers-reduced-motion: no-preference) { .vista { animation: su .25s ease-out; } @keyframes su { from { transform: translateY(6px); } to { transform: none; } } }
+/* marchio: logo Simplyx con «Sales» accanto */
+.marca { display: flex; align-items: center; gap: 12px; flex: none; text-decoration: none; color: var(--bar-ink); }
+.marca img { display: block; height: 30px; width: auto; }
+.marca span { padding-left: 12px; border-left: 1px solid var(--bar-ink-2); color: var(--bar-ink); font-size: 1.25rem; font-weight: 300; letter-spacing: .02em; line-height: 1.1; }
+.bar .col { min-height: 56px; }
+.esci { flex: none; margin-left: auto; padding: 6px 13px; border: 1px solid var(--bar-ink-2); border-radius: 99px; background: none; color: var(--bar-ink); font-size: .8125rem; font-weight: 500; }
+/* accesso */
+.entra { max-width: 400px; margin: 4vh auto 0; display: grid; gap: 18px; }
+.entra h1 { font-size: 2rem; }
+.entra form { display: grid; gap: 14px; padding: 22px; border-radius: var(--r); background: var(--bg-2); }
+.entra label { display: grid; gap: 6px; font-size: .875rem; font-weight: 600; }
+.entra input { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); font: inherit; font-size: 1rem; }
+.btn { padding: 13px 18px; border: 0; border-radius: 99px; background: var(--blue); color: #fff; font-weight: 600; font-size: 1rem; }
+.btn[disabled] { opacity: .6; cursor: progress; }
+.err { color: var(--no); font-size: .9375rem; }
+@media (max-width: 700px) { .marca img { height: 24px; } .marca span { display: inline; font-size: 1.0625rem; padding-left: 9px; } .marca { gap: 9px; } }
+/* telefono: marchio ed «Esci» sulla prima riga, sezioni sulla seconda a tutta larghezza */
+@media (max-width: 700px) { .bar .col { flex-wrap: wrap; row-gap: 8px; } .bar .nav { order: 3; flex: 0 0 100%; } }
